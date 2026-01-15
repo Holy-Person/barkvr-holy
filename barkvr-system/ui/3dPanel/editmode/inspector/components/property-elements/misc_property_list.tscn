@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyrmqkbtw5sgq"]
+
+[ext_resource type="Script" uid="uid://7t3tkdbykcno" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/misc_property_list.gd" id="1_5mdvp"]
+[ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="1_mj3t1"]
+
+[node name="PropertyList" type="ScrollContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_mj3t1")
+script = ExtResource("1_5mdvp")
