@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcgft7j8haksh"]
+
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_l4onu"]
+[ext_resource type="Script" uid="uid://cbybiogb8jkgx" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_bool.gd" id="1_m5321"]
+
+[node name="PropertyBool" instance=ExtResource("1_l4onu")]
+script = ExtResource("1_m5321")
+
+[node name="CheckBox" type="CheckBox" parent="BoxContainer/EditingField" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_mode = 0
+text = "On"
