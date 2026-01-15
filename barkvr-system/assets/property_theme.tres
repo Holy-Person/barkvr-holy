@@ -1,4 +1,10 @@
-[gd_resource type="Theme" load_steps=10 format=3 uid="uid://ctb75bgyj6u7e"]
+[gd_resource type="Theme" load_steps=18 format=3 uid="uid://ctb75bgyj6u7e"]
+
+[ext_resource type="FontVariation" uid="uid://cj1etf32fetld" path="res://barkvr-system/assets/font/barkfonts.tres" id="1_co4j5"]
+[ext_resource type="Texture2D" uid="uid://dnimii3ey56ir" path="res://barkvr-system/assets/icons/editor-icons/GuiChecked.svg" id="1_ichvv"]
+[ext_resource type="Texture2D" uid="uid://d074i6vaboce5" path="res://barkvr-system/assets/icons/editor-icons/GuiCheckedDisabled.svg" id="2_co4j5"]
+[ext_resource type="Texture2D" uid="uid://0r57jf1504ig" path="res://barkvr-system/assets/icons/editor-icons/GuiUnchecked.svg" id="3_5v15x"]
+[ext_resource type="Texture2D" uid="uid://ber1k2xvy4bii" path="res://barkvr-system/assets/icons/editor-icons/GuiUncheckedDisabled.svg" id="4_1bcok"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gx4j"]
 content_margin_left = 4.0
@@ -11,6 +17,20 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5v15x"]
+bg_color = Color(0.21960784, 0.21960784, 0.21960784, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="FontVariation" id="FontVariation_1bcok"]
+base_font = ExtResource("1_co4j5")
+variation_opentype = {
+2003072104: 100,
+2003265652: 550
+}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichvv"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
@@ -67,8 +87,28 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_co4j5"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [resource]
 Button/styles/pressed = SubResource("StyleBoxFlat_8gx4j")
+CategoryHeader/base_type = &"PanelContainer"
+CategoryHeader/styles/panel = SubResource("StyleBoxFlat_5v15x")
+CategoryLabel/base_type = &"Label"
+CategoryLabel/colors/font_color = Color(0.7882353, 0.7882353, 0.7882353, 1)
+CategoryLabel/fonts/font = SubResource("FontVariation_1bcok")
+CheckBox/icons/checked = ExtResource("1_ichvv")
+CheckBox/icons/checked_disabled = ExtResource("2_co4j5")
+CheckBox/icons/unchecked = ExtResource("3_5v15x")
+CheckBox/icons/unchecked_disabled = ExtResource("4_1bcok")
 EditingField/base_type = &"PanelContainer"
 EditingField/styles/panel = SubResource("StyleBoxFlat_ichvv")
 LineEdit/colors/selection_color = Color(0.20392157, 0.31764707, 0.46666667, 1)
@@ -87,3 +127,4 @@ PropertyBasePanel/base_type = &"PanelContainer"
 PropertyBasePanel/styles/panel = SubResource("StyleBoxEmpty_co4j5")
 PropertySpinSliderAxis/base_type = &"PanelContainer"
 PropertySpinSliderAxis/styles/panel = SubResource("StyleBoxFlat_bpoyx")
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_co4j5")
