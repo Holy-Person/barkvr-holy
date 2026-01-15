@@ -51,6 +51,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Property Name"
 vertical_alignment = 1
+text_overrun_behavior = 1
 
 [node name="ButtonReset" type="TextureButton" parent="BoxContainer/NameField/HBoxContainer"]
 unique_name_in_owner = true

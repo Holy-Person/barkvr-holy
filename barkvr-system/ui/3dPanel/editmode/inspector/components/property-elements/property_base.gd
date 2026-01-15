@@ -95,7 +95,6 @@ func _update_visual() -> void:
 ## Set the target object and property data of this element, indended to be called before the node is ready.
 func set_data(target_object: Object, property: Dictionary) -> void:
 	target = target_object
-	print(property)
 	property_name = property.name
 
 	if (property.usage & PROPERTY_USAGE_CHECKABLE) > 0:
