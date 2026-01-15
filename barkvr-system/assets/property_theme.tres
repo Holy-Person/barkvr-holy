@@ -1,0 +1,89 @@
+[gd_resource type="Theme" load_steps=10 format=3 uid="uid://ctb75bgyj6u7e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gx4j"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichvv"]
+bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kkr1"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.11372549, 0.11372549, 0.11372549, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3s2yj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+draw_center = false
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3s2yj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ichvv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3anre"]
+bg_color = Color(0.16470589, 0.24313726, 0.34901962, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co4j5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpoyx"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 4.0
+bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[resource]
+Button/styles/pressed = SubResource("StyleBoxFlat_8gx4j")
+EditingField/base_type = &"PanelContainer"
+EditingField/styles/panel = SubResource("StyleBoxFlat_ichvv")
+LineEdit/colors/selection_color = Color(0.20392157, 0.31764707, 0.46666667, 1)
+LineEdit/styles/focus = SubResource("StyleBoxFlat_7kkr1")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_3s2yj")
+PanelContainerFlat/base_type = &"PanelContainer"
+PanelContainerFlat/styles/panel = SubResource("StyleBoxEmpty_3s2yj")
+PropertyBaseButton/base_type = &"Button"
+PropertyBaseButton/styles/disabled = SubResource("StyleBoxEmpty_ichvv")
+PropertyBaseButton/styles/focus = SubResource("StyleBoxEmpty_ichvv")
+PropertyBaseButton/styles/hover = SubResource("StyleBoxEmpty_ichvv")
+PropertyBaseButton/styles/hover_pressed = SubResource("StyleBoxFlat_3anre")
+PropertyBaseButton/styles/normal = SubResource("StyleBoxEmpty_ichvv")
+PropertyBaseButton/styles/pressed = SubResource("StyleBoxFlat_3anre")
+PropertyBasePanel/base_type = &"PanelContainer"
+PropertyBasePanel/styles/panel = SubResource("StyleBoxEmpty_co4j5")
+PropertySpinSliderAxis/base_type = &"PanelContainer"
+PropertySpinSliderAxis/styles/panel = SubResource("StyleBoxFlat_bpoyx")
