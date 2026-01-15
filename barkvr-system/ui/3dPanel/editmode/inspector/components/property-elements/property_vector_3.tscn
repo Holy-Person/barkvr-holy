@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0negxx0bii55"]
+
+[ext_resource type="Script" uid="uid://hvcs0a48sp2n" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_vector_base.gd" id="1_3tlw5"]
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_ikxw4"]
+[ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="2_we1pw"]
+[ext_resource type="Texture2D" uid="uid://yv716hr5kpt8" path="res://barkvr-system/assets/icons/editor-icons/Unlinked.svg" id="4_expfo"]
+[ext_resource type="Texture2D" uid="uid://b4trwce52nxu0" path="res://barkvr-system/assets/icons/editor-icons/Instance.svg" id="5_ljbkq"]
+
+[node name="PropertyVector3" node_paths=PackedStringArray("line_edit_list") instance=ExtResource("1_ikxw4")]
+script = ExtResource("1_3tlw5")
+line_edit_list = {
+"x": NodePath("BoxContainer/EditingField/HBoxContainer/PropertySpinSlider/HBoxContainer/LineEditX"),
+"y": NodePath("BoxContainer/EditingField/HBoxContainer/PropertySpinSlider2/HBoxContainer/LineEditY"),
+"z": NodePath("BoxContainer/EditingField/HBoxContainer/PropertySpinSlider3/HBoxContainer/LineEditZ")
+}
+
+[node name="BoxContainer" parent="." index="1"]
+vertical = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField" index="0"]
+layout_mode = 2
+
+[node name="PropertySpinSlider" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider/HBoxContainer" index="0"]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider/HBoxContainer/PanelContainer" index="0"]
+modulate = Color(0.7629452, 0.32355306, 0.27393177, 1)
+layout_mode = 2
+text = "x"
+horizontal_alignment = 1
+
+[node name="LineEditX" type="LineEdit" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_we1pw")
+
+[node name="PropertySpinSlider2" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider2" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="0"]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0"]
+modulate = Color(0.3647059, 0.6392157, 0.34117648, 1)
+layout_mode = 2
+text = "y"
+horizontal_alignment = 1
+
+[node name="LineEditY" type="LineEdit" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_we1pw")
+
+[node name="PropertySpinSlider3" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider3" index="0"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="0"]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider3/HBoxContainer/PanelContainer" index="0"]
+modulate = Color(0.4841385, 0.42821103, 0.74390393, 1)
+layout_mode = 2
+text = "z"
+horizontal_alignment = 1
+
+[node name="LineEditZ" type="LineEdit" parent="BoxContainer/EditingField/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_we1pw")
+
+[node name="ButtonRatioLink" type="TextureButton" parent="BoxContainer/EditingField/HBoxContainer" index="3"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+focus_mode = 0
+toggle_mode = true
+texture_normal = ExtResource("4_expfo")
+texture_pressed = ExtResource("5_ljbkq")
+stretch_mode = 3
