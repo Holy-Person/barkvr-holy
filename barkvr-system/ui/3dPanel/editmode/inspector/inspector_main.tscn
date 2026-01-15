@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://3xyrjxnkg1pr" path="res://barkvr-system/ui/3dPanel/editmode/inspector/inspector_main.gd" id="2_rlvjo"]
 [ext_resource type="Script" uid="uid://dyuw1r41shq58" path="res://barkvr-system/ui/3dPanel/panel_resizer.gd" id="3_7ww00"]
 [ext_resource type="PackedScene" uid="uid://dohf48lsx84mx" path="res://barkvr-system/ui/3dPanel/editmode/inspector/panels/panel_scene.tscn" id="4_dldjt"]
-[ext_resource type="PackedScene" uid="uid://jqh6stt10ct5" path="res://barkvr-system/ui/3dPanel/editmode/attributes.tscn" id="5_nal8t"]
+[ext_resource type="PackedScene" uid="uid://37h8b6h0iqd6" path="res://barkvr-system/ui/3dPanel/editmode/inspector/panels/panel_properties.tscn" id="5_nal8t"]
 [ext_resource type="PackedScene" uid="uid://cyqdfiewnkxl1" path="res://barkvr-system/ui/3dPanel/editmode/inspector/panels/panel_script.tscn" id="6_niosx"]
 [ext_resource type="PackedScene" uid="uid://dhwovnnr04rri" path="res://barkvr-system/systems/vbs/ui/bvs_ui.tscn" id="7_j0kk2"]
 
