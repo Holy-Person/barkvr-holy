@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ynmsuc1l8yy"]
+
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_grmgw"]
+
+[node name="PropertyColor" instance=ExtResource("1_grmgw")]
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="BoxContainer/EditingField" index="0"]
+layout_mode = 2

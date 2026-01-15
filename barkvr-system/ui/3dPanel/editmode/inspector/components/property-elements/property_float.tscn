@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://po0psf0jy7wg"]
+
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_tgmpw"]
+
+[node name="PropertyFloat" instance=ExtResource("1_tgmpw")]
+
+[node name="LineEdit" type="LineEdit" parent="BoxContainer/EditingField" index="0"]
+layout_mode = 2

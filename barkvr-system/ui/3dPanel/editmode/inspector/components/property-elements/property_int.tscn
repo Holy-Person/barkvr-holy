@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyiaij1fj5sje"]
+
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_hhqjy"]
+
+[node name="PropertyInt" instance=ExtResource("1_hhqjy")]
+
+[node name="SpinBox" type="SpinBox" parent="BoxContainer/EditingField" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
