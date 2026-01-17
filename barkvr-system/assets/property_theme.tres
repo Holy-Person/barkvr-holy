@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=25 format=3 uid="uid://ctb75bgyj6u7e"]
+[gd_resource type="Theme" load_steps=24 format=3 uid="uid://ctb75bgyj6u7e"]
 
 [ext_resource type="FontVariation" uid="uid://cj1etf32fetld" path="res://barkvr-system/assets/font/barkfonts.tres" id="1_co4j5"]
 [ext_resource type="Texture2D" uid="uid://dnimii3ey56ir" path="res://barkvr-system/assets/icons/editor-icons/GuiChecked.svg" id="1_ichvv"]
@@ -49,7 +49,15 @@ variation_opentype = {
 2003265652: 550
 }
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5v15x"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1bcok"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3anre"]
+content_margin_left = 3.0
+content_margin_right = 3.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bcok"]
 content_margin_left = 3.0
@@ -60,22 +68,20 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8gx4j"]
-content_margin_left = 3.0
-content_margin_right = 3.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ar2qe"]
-content_margin_left = 3.0
-content_margin_right = 3.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3anre"]
-content_margin_left = 3.0
-content_margin_right = 3.0
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ichvv"]
 bg_color = Color(0.09019608, 0.09019608, 0.09019608, 1)
 corner_radius_top_left = 3
 corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ua4ea"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.20784314, 0.36862746, 0.5803922, 1)
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 anti_aliasing = false
@@ -147,20 +153,28 @@ CategoryHeader/styles/panel = SubResource("StyleBoxFlat_5v15x")
 CategoryLabel/base_type = &"Label"
 CategoryLabel/colors/font_color = Color(0.7882353, 0.7882353, 0.7882353, 1)
 CategoryLabel/fonts/font = SubResource("FontVariation_1bcok")
+CheckBox/colors/font_color = Color(0.81325716, 0.8132579, 0.81325734, 1)
 CheckBox/colors/font_hover_pressed_color = Color(0.54882425, 0.7398515, 1, 1)
 CheckBox/colors/font_pressed_color = Color(0.3372549, 0.61960787, 1, 1)
 CheckBox/icons/checked = ExtResource("1_ichvv")
 CheckBox/icons/checked_disabled = ExtResource("2_co4j5")
 CheckBox/icons/unchecked = ExtResource("3_5v15x")
 CheckBox/icons/unchecked_disabled = ExtResource("4_1bcok")
+CheckBox/styles/disabled = SubResource("StyleBoxEmpty_1bcok")
+CheckBox/styles/hover = SubResource("StyleBoxEmpty_1bcok")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_1bcok")
+CheckBox/styles/normal = SubResource("StyleBoxEmpty_1bcok")
+CheckBox/styles/pressed = SubResource("StyleBoxEmpty_1bcok")
 CheckableCheckBox/base_type = &"CheckBox"
-CheckableCheckBox/styles/disabled = SubResource("StyleBoxEmpty_5v15x")
+CheckableCheckBox/styles/disabled = SubResource("StyleBoxEmpty_3anre")
 CheckableCheckBox/styles/hover = SubResource("StyleBoxFlat_1bcok")
-CheckableCheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_8gx4j")
-CheckableCheckBox/styles/normal = SubResource("StyleBoxEmpty_ar2qe")
+CheckableCheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_3anre")
+CheckableCheckBox/styles/normal = SubResource("StyleBoxEmpty_3anre")
 CheckableCheckBox/styles/pressed = SubResource("StyleBoxEmpty_3anre")
 EditingField/base_type = &"PanelContainer"
 EditingField/styles/panel = SubResource("StyleBoxFlat_ichvv")
+EditingFieldFoldable/base_type = &"PanelContainer"
+EditingFieldFoldable/styles/panel = SubResource("StyleBoxFlat_ua4ea")
 Label/colors/font_color = Color(0.93333334, 0.93333334, 0.93333334, 1)
 LineEdit/colors/selection_color = Color(0.20392157, 0.31764707, 0.46666667, 1)
 LineEdit/styles/focus = SubResource("StyleBoxFlat_7kkr1")
