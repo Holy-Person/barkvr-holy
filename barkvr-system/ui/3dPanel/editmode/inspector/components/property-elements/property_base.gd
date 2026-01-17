@@ -10,45 +10,61 @@ extends Container
 @onready var ui_name_container: MarginContainer = %NameField
 @onready var ui_button_checkable: CheckBox = %ButtonCheckable
 @onready var ui_label: Label = %Label
-@onready var ui_button_reset: TextureButton = %ButtonReset
+@onready var ui_button_reset: Button = %ButtonReset
 @onready var ui_editing_field: PanelContainer = %EditingField
+@onready var ui_button_delete: Button = %ButtonDelete
 
 
 
-## A checkbox for nullable variant types.
-## TODO: Disable editable content while null.
+## Checkable properties have a checkbox for nullable variant types.
 var checkable: bool = false:
 	set(value):
 		checkable = value
 		ui_button_checkable.visible = value
+		# TODO: Disable editable content while null.
 
-## Set this to false to[br]do thing.
+## Deletable properties can be deleted by the user.
+var deletable: bool = false:
+	set(value):
+		deletable = value
+		# TODO: Add option to delete property.
+
+## Whether or not the label should be drawn.
 var draw_label: bool = true:
 	set(value):
 		draw_label = value
 		ui_name_container.visible = value
 
+## Set this property to change the text of the label.
 var label: String = "":
 	set(value):
 		label = value
 		ui_label.text = value.capitalize()
 
+## Whether or not the property can be edited.
 var read_only: bool = false:
 	set(value):
 		read_only = value
 		# TODO: Read only state.
 
+## The button group used for the background button on all properties.
+## Ensures only one property is highlighted at any one time.
 var button_group: ButtonGroup:
 	set(value):
-		button_group = value
-		ui_button_background.button_group = button_group
+		ui_button_background.button_group = value
+	get:
+		return ui_button_background.button_group
 
 # Type ignores naming conventions.
+## The event manager used for undo-able events.
 var event_manager: Bark_Journal
 
+## The target object the property belongs to.
 var target: Object
+## The property name of this property on the object.
 var property_name: String
 
+## Return whether the node is currently being edited.
 var is_editing: bool:
 	get:
 		return _get_editing_state()
@@ -58,8 +74,11 @@ var is_editing: bool:
 func _ready() -> void:
 	event_manager = Engine.get_singleton(&"event_manager")
 
-	_setup()
+	ui_button_checkable.toggled.connect(_on_checkable_toggled)
+	ui_button_reset.pressed.connect(_on_reset_pressed)
+	ui_button_delete.pressed.connect(_on_delete_pressed)
 
+	_setup()
 	_check_update()
 
 ## Override function.
@@ -69,10 +88,11 @@ func _setup() -> void:
 
 
 
+## Repeating function to update the visual in the inspector.
 func _check_update() -> void:
 	var parent: ScrollContainer = get_parent_control().get_parent_control()
 
-	# Don't update if the value is currently being edited.
+	# Don't update if the value is currently being edited or has no target.
 	if target and parent and not is_editing:
 		var parent_rect: Rect2 = parent.get_global_rect()
 		var rect: Rect2 = get_global_rect()
@@ -92,11 +112,12 @@ func _update_visual() -> void:
 
 
 
-## Set the target object and property data of this element, indended to be called before the node is ready.
+## Set the target object and property data of this element.
 func set_data(target_object: Object, property: Dictionary) -> void:
 	target = target_object
 	property_name = property.name
 
+	# If the value is checkable, show the checkable button.
 	if (property.usage & PROPERTY_USAGE_CHECKABLE) > 0:
 		checkable = true
 
@@ -116,7 +137,7 @@ func _on_data_set(_property: Dictionary) -> void:
 
 
 ## Override function.
-## Called on get of is_editing.
+## Called on get of is_editing, used to get the current editing status.
 func _get_editing_state() -> bool:
 	return false
 
@@ -124,3 +145,30 @@ func _get_editing_state() -> bool:
 
 func _on_read_only_toggled() -> void:
 	pass
+
+## Called when the checkable button is toggled.
+func _on_checkable_toggled(_toggled_on: bool) -> void:
+	# TODO: Does this set to null or some default value if unchecked? I think it's null.
+	# Sets to default value if checked true, I think(?).
+	pass
+
+## Called when the reset button is pressed.
+func _on_reset_pressed() -> void:
+	pass
+
+## Called when the delete button is pressed.
+func _on_delete_pressed() -> void:
+	# TODO: There's no hint or usage to denote these, might just leave it as a UI thing with no function.
+	pass
+
+func set_value(value: Variant, property_suffix: String = "") -> void:
+	if not is_instance_valid(target) or not is_instance_valid(event_manager): return
+
+	# TODO: Check if set value is default value, toggle reset button visibility.
+
+	# Set property value via event manager to allow for undo.
+	event_manager.set_property(
+		event_manager.root.get_path_to(target),
+		property_name + property_suffix,
+		value
+	)
