@@ -14,6 +14,7 @@ extends Container
 
 
 const PROPERTY_CATEGORY = preload("uid://cw7vdx8shf5ca")
+const PROPERTY_GROUP = preload("uid://bk3i20e6suery")
 
 const FIELD_BOOL = preload("uid://bcgft7j8haksh")
 const FIELD_INT = preload("uid://dyiaij1fj5sje")
@@ -22,6 +23,8 @@ const FIELD_STRING = preload("uid://bpcdhejgbrn6i")
 const FIELD_COLOR = preload("uid://1ynmsuc1l8yy")
 const FIELD_VECTOR_2 = preload("uid://dsinfbuvvxpxu")
 const FIELD_VECTOR_3 = preload("uid://d0negxx0bii55")
+const FIELD_ENUM = preload("uid://bho6ojyyrbvsp")
+
 
 ## Button group to ensure only one field is active at a time.
 var list_button_group := ButtonGroup.new()
@@ -49,15 +52,16 @@ func edit(object: Object) -> void:
 	var start_time: float = Time.get_ticks_msec()
 
 	for property: Dictionary in object.get_property_list():
-		# Discard everything if selection has changed.
-		if object != current_object: return
-
-		print(property)
-
 		# Delay for performance.
 		if start_time + 1 < Time.get_ticks_msec():
 			await get_tree().process_frame
 			start_time = Time.get_ticks_msec()
+
+		# Discard if selection has changed.
+		if object != current_object: return
+		if not is_instance_valid(object): return
+
+		print(property)
 
 		# Unknown discard.
 		if property.name == "owner":
@@ -69,8 +73,8 @@ func edit(object: Object) -> void:
 		# Groups. (Going to be really annoying to work with.)
 		elif (property.usage & PROPERTY_USAGE_GROUP) > 0:
 			_add_group(property)
+		# Add as an editable property.
 		else:
-			if not is_instance_valid(object): return
 			_add_property(object, property)
 
 
@@ -87,9 +91,9 @@ func _add_category(property: Dictionary) -> void:
 	category.set_data(property)
 
 func _add_group(property: Dictionary) -> void:
-	var label := Label.new()
-	label.text = property.name
-	v_box_container.add_child(label)
+	var group: FoldableContainer = PROPERTY_GROUP.instantiate()
+	group.title = property.name
+	v_box_container.add_child(group)
 
 func _add_property(object: Object, property: Dictionary) -> void:
 	var property_field: PropertyBase
@@ -98,20 +102,16 @@ func _add_property(object: Object, property: Dictionary) -> void:
 		TYPE_BOOL:
 			property_field = FIELD_BOOL.instantiate()
 		TYPE_INT:
-			if property.hint == 2:
-				pass
-				#property_field = FIELD_ENUM.instantiate()
+			if property.hint == PROPERTY_HINT_ENUM:
+				property_field = FIELD_ENUM.instantiate()
 				#tmp.set_data(fieldname, new_target, prop.name, prop)
 			else:
 				property_field = FIELD_INT.instantiate()
 		TYPE_FLOAT:
 			property_field = FIELD_FLOAT.instantiate()
-		TYPE_STRING:
-			property_field = FIELD_STRING.instantiate()
-		TYPE_STRING_NAME:
-			if property.hint == 2:
-				pass
-				#property_field = FIELD_ENUM.instantiate()
+		TYPE_STRING, TYPE_STRING_NAME:
+			if property.hint == PROPERTY_HINT_ENUM:
+				property_field = FIELD_ENUM.instantiate()
 				#tmp.set_data(fieldname, new_target, prop.name, prop, true)
 			else:
 				property_field = FIELD_STRING.instantiate()
