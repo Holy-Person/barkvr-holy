@@ -4,6 +4,6 @@
 
 [node name="PropertyString" instance=ExtResource("1_fwo5e")]
 
-[node name="LineEdit" type="LineEdit" parent="BoxContainer/EditingField" index="0"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
 unique_name_in_owner = true
 layout_mode = 2

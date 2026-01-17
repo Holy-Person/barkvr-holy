@@ -7,11 +7,10 @@ extends Container
 
 
 @onready var ui_button_background: Button = %ButtonBackground
-@onready var ui_name_container: MarginContainer = %NameField
 @onready var ui_button_checkable: CheckBox = %ButtonCheckable
+@onready var ui_texture_type: TextureRect = %TextureType
 @onready var ui_label: Label = %Label
 @onready var ui_button_reset: Button = %ButtonReset
-@onready var ui_editing_field: PanelContainer = %EditingField
 @onready var ui_button_delete: Button = %ButtonDelete
 
 
@@ -28,12 +27,6 @@ var deletable: bool = false:
 	set(value):
 		deletable = value
 		# TODO: Add option to delete property.
-
-## Whether or not the label should be drawn.
-var draw_label: bool = true:
-	set(value):
-		draw_label = value
-		ui_name_container.visible = value
 
 ## Set this property to change the text of the label.
 var label: String = "":
@@ -62,7 +55,9 @@ var event_manager: Bark_Journal
 ## The target object the property belongs to.
 var target: Object
 ## The property name of this property on the object.
-var property_name: String
+var property_name: StringName
+## Default value of this property, if one exists.
+var property_revert_value: Variant
 
 ## Return whether the node is currently being edited.
 var is_editing: bool:
@@ -121,6 +116,12 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 	if (property.usage & PROPERTY_USAGE_CHECKABLE) > 0:
 		checkable = true
 
+	# Set revert value if revert value exists.
+	if target.property_can_revert(property_name):
+		property_revert_value = property_get_revert(property_name)
+		if property_revert_value != target.get(property_name):
+			ui_button_reset.visible = true
+
 	label = property_name
 
 	if target is Skeleton3D: # Singled out for autocomplete recognition.
@@ -154,17 +155,24 @@ func _on_checkable_toggled(_toggled_on: bool) -> void:
 
 ## Called when the reset button is pressed.
 func _on_reset_pressed() -> void:
-	pass
+	set_value(property_revert_value)
 
 ## Called when the delete button is pressed.
 func _on_delete_pressed() -> void:
 	# TODO: There's no hint or usage to denote these, might just leave it as a UI thing with no function.
 	pass
 
+## Set the value of the property.
 func set_value(value: Variant, property_suffix: String = "") -> void:
 	if not is_instance_valid(target) or not is_instance_valid(event_manager): return
+	if read_only: return
 
-	# TODO: Check if set value is default value, toggle reset button visibility.
+	# Show revert button if value is not the default.
+	if target.property_can_revert(property_name):
+		if property_revert_value != value:
+			ui_button_reset.visible = true
+		else:
+			ui_button_reset.visible = false
 
 	# Set property value via event manager to allow for undo.
 	event_manager.set_property(

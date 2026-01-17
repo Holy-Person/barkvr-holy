@@ -4,5 +4,5 @@
 
 [node name="PropertyColor" instance=ExtResource("1_grmgw")]
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="BoxContainer/EditingField" index="0"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
 layout_mode = 2

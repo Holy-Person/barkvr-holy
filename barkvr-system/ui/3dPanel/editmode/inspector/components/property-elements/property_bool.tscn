@@ -6,7 +6,7 @@
 [node name="PropertyBool" instance=ExtResource("1_l4onu")]
 script = ExtResource("1_m5321")
 
-[node name="CheckBox" type="CheckBox" parent="BoxContainer/EditingField" index="0"]
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0

@@ -1,74 +1,71 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsinfbuvvxpxu"]
+[gd_scene load_steps=5 format=3 uid="uid://dsinfbuvvxpxu"]
 
 [ext_resource type="Script" uid="uid://hvcs0a48sp2n" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_vector_base.gd" id="1_daicm"]
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_u7qmw"]
-[ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="2_u7qmw"]
 [ext_resource type="Texture2D" uid="uid://yv716hr5kpt8" path="res://barkvr-system/assets/icons/editor-icons/Unlinked.svg" id="4_tydyq"]
 [ext_resource type="Texture2D" uid="uid://b4trwce52nxu0" path="res://barkvr-system/assets/icons/editor-icons/Instance.svg" id="5_ub3e0"]
 
 [node name="PropertyVector2" node_paths=PackedStringArray("line_edit_list") instance=ExtResource("1_u7qmw")]
 script = ExtResource("1_daicm")
 line_edit_list = {
-"x": NodePath("BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer/LineEditX"),
-"y": NodePath("BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer/LineEditY")
+"x": NodePath("VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer/LineEdit"),
+"y": NodePath("VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer/LineEdit")
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BoxContainer/EditingField/HBoxContainer" index="0"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PropertySpinSlider" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer" index="0"]
+[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer" index="0"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PanelContainerFlat"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider" index="0"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer" index="0"]
 layout_mode = 2
 theme_type_variation = &"PropertySpinSliderAxis"
 
-[node name="Label" type="Label" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer/PanelContainer" index="0"]
-modulate = Color(0.7629452, 0.32355306, 0.27393177, 1)
+[node name="Label" type="Label" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer/PanelContainer" index="0"]
+self_modulate = Color(0.8821333, 0.3741794, 0.38193867, 1)
 layout_mode = 2
 text = "x"
 horizontal_alignment = 1
 
-[node name="LineEditX" type="LineEdit" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer" index="1"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider/HBoxContainer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_u7qmw")
 
-[node name="PropertySpinSlider2" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer" index="1"]
+[node name="PropertySpinSlider2" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PanelContainerFlat"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider2" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider2" index="0"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer" index="0"]
 layout_mode = 2
 theme_type_variation = &"PropertySpinSliderAxis"
 
-[node name="Label" type="Label" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0"]
-modulate = Color(0.36298805, 0.6390851, 0.3393785, 1)
+[node name="Label" type="Label" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0"]
+self_modulate = Color(0.3647059, 0.6392157, 0.34117648, 1)
 layout_mode = 2
 text = "y"
 horizontal_alignment = 1
 
-[node name="LineEditY" type="LineEdit" parent="BoxContainer/EditingField/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer" index="1"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/VBoxContainer/PropertySpinSlider2/HBoxContainer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_u7qmw")
 
-[node name="ButtonRatioLink" type="TextureButton" parent="BoxContainer/EditingField/HBoxContainer" index="1"]
+[node name="ButtonRatioLink" type="TextureButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer" index="1"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(24, 0)
