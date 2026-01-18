@@ -71,6 +71,11 @@ func edit(object: Object) -> void:
 		if property.name == "owner":
 			continue
 
+		# Discard script variables that are not set to export.
+		if (property.usage & PROPERTY_USAGE_SCRIPT_VARIABLE) > 0:
+			if not (property.usage & PROPERTY_USAGE_EDITOR) > 0:
+				continue
+
 		# Add a category header.
 		if (property.usage & PROPERTY_USAGE_CATEGORY) > 0:
 			@warning_ignore("unassigned_variable") # We are in a for loop, why does this warn?
