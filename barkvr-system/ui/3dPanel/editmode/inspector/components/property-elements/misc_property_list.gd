@@ -26,8 +26,6 @@ const FIELD_VECTOR_3 = preload("uid://d0negxx0bii55")
 const FIELD_ENUM = preload("uid://bho6ojyyrbvsp")
 
 
-## Button group to ensure only one field is active at a time.
-var list_button_group := ButtonGroup.new()
 
 ## The current object being edited.
 var current_object: Object
@@ -51,6 +49,12 @@ func edit(object: Object) -> void:
 
 	var start_time: float = Time.get_ticks_msec()
 
+	# Last spawned category to parent fields under.
+	var current_category: Control
+
+	# Button group to ensure only one field is active at a time.
+	var list_button_group := ButtonGroup.new()
+
 	for property: Dictionary in object.get_property_list():
 		# Delay for performance.
 		if start_time + 1 < Time.get_ticks_msec():
@@ -67,15 +71,37 @@ func edit(object: Object) -> void:
 		if property.name == "owner":
 			continue
 
-		# Category headers.
+		# Add a category header.
 		if (property.usage & PROPERTY_USAGE_CATEGORY) > 0:
-			_add_category(property)
-		# Groups. (Going to be really annoying to work with.)
+			@warning_ignore("unassigned_variable") # We are in a for loop, why does this warn?
+			if current_category:
+				pass # TODO: Check if category is empty.
+			current_category = _new_category(property)
+
+		# Add a foldable group.
 		elif (property.usage & PROPERTY_USAGE_GROUP) > 0:
-			_add_group(property)
+			var group: Control = _new_group(property)
+			if current_category:
+				current_category.add_child(group)
+			else:
+				v_box_container.add_child(group)
+
+		# TODO: Subgroups.
+		elif (property.usage & PROPERTY_USAGE_SUBGROUP) > 0:
+			pass
+
 		# Add as an editable property.
 		else:
-			_add_property(object, property)
+			var property_field: PropertyBase = _new_property(property)
+			if not property_field: continue
+
+			if current_category:
+				current_category.add_child(property_field)
+			else:
+				v_box_container.add_child(property_field)
+
+			property_field.button_group = list_button_group
+			property_field.set_data(object, property)
 
 
 
@@ -85,17 +111,18 @@ func get_edited_object() -> Object:
 
 
 
-func _add_category(property: Dictionary) -> void:
+func _new_category(property: Dictionary) -> Control:
 	var category = PROPERTY_CATEGORY.instantiate()
 	v_box_container.add_child(category)
 	category.set_data(property)
+	return category
 
-func _add_group(property: Dictionary) -> void:
+func _new_group(property: Dictionary) -> Control:
 	var group: FoldableContainer = PROPERTY_GROUP.instantiate()
 	group.title = property.name
-	v_box_container.add_child(group)
+	return group
 
-func _add_property(object: Object, property: Dictionary) -> void:
+func _new_property(property: Dictionary) -> PropertyBase:
 	var property_field: PropertyBase
 
 	match property.type:
@@ -128,7 +155,4 @@ func _add_property(object: Object, property: Dictionary) -> void:
 		_:
 			print("Non-handled type: ", property.type)
 
-	if property_field:
-		v_box_container.add_child(property_field)
-		property_field.button_group = list_button_group
-		property_field.set_data(object, property)
+	return property_field

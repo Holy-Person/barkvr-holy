@@ -85,7 +85,7 @@ func _setup() -> void:
 
 ## Repeating function to update the visual in the inspector.
 func _check_update() -> void:
-	var parent: ScrollContainer = get_parent_control().get_parent_control()
+	var parent: ScrollContainer = get_parent_control().get_parent_control().get_parent_control()
 
 	# Don't update if the value is currently being edited or has no target.
 	if target and parent and not is_editing:

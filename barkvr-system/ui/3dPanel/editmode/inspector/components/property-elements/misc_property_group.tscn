@@ -1,10 +1,13 @@
-[gd_scene format=3 uid="uid://bk3i20e6suery"]
+[gd_scene load_steps=2 format=3 uid="uid://bk3i20e6suery"]
 
-[node name="Control" type="FoldableContainer"]
+[ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="1_i4tpn"]
+
+[node name="MiscPropertyGroup" type="FoldableContainer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 32.0
+offset_bottom = 26.0
 grow_horizontal = 2
 focus_mode = 0
+theme = ExtResource("1_i4tpn")
 folded = true
 title = "Title"
