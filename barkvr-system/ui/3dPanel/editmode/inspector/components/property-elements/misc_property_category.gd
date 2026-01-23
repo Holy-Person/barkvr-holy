@@ -6,7 +6,7 @@ func set_data(property: Dictionary) -> void:
 	var property_name: String = property.name
 	%Label.text = property_name
 	if property_name.ends_with(".gd"):
-		%TextureRect.texture = get_editor_icon(&"Script")
+		%TextureRect.texture = get_editor_icon(&"GDScript")
 	else:
 		%TextureRect.texture = get_editor_icon(property_name)
 
