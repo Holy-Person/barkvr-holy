@@ -34,12 +34,6 @@ var label: String = "":
 		label = value
 		ui_label.text = value.capitalize()
 
-## Whether or not the property can be edited.
-var read_only: bool = false:
-	set(value):
-		read_only = value
-		# TODO: Read only state.
-
 ## The button group used for the background button on all properties.
 ## Ensures only one property is highlighted at any one time.
 var button_group: ButtonGroup:
@@ -47,6 +41,8 @@ var button_group: ButtonGroup:
 		ui_button_background.button_group = value
 	get:
 		return ui_button_background.button_group
+
+var scroll_container: ScrollContainer
 
 # Type ignores naming conventions.
 ## The event manager used for undo-able events.
@@ -74,7 +70,6 @@ func _ready() -> void:
 	ui_button_delete.pressed.connect(_on_delete_pressed)
 
 	_setup()
-	_check_update()
 
 ## Override function.
 ## Called after the PropertyBase is ready.
@@ -85,24 +80,43 @@ func _setup() -> void:
 
 ## Repeating function to update the visual in the inspector.
 func _check_update() -> void:
-	var parent: ScrollContainer = get_parent_control().get_parent_control().get_parent_control()
-
-	# Don't update if the value is currently being edited or has no target.
-	if target and parent and not is_editing:
-		var parent_rect: Rect2 = parent.get_global_rect()
-		var rect: Rect2 = get_global_rect()
-
-		# Check if this property is currently visible in the ScrollContainer.
-		if (rect.end.y > parent_rect.position.y and rect.position.y < parent_rect.end.y):
-			_update_visual()
-
 	# Loop function on inspector update interval + own spawn offset.
 	# TODO: Zodie seems to want to change this someday, it's unoptimized.
 	create_tween().tween_callback(_check_update).set_delay(Engine.get_singleton(&"settings_manager").inspector_update_interval)
 
+	# Don't update if the value is currently being edited or has no valid target.
+	if is_instance_valid(target) and not is_editing and is_visible_in_tree():
+		if scroll_container:
+			var scroll_rect: Rect2 = scroll_container.get_global_rect()
+			var rect: Rect2 = get_global_rect()
+
+			# Check if this property is currently visible in the ScrollContainer.
+			if not (rect.end.y > scroll_rect.position.y and rect.position.y < scroll_rect.end.y):
+				return
+
+		_update_visual()
+
+## Update the base visual of the current property.
+func _update_visual() -> void:
+	var current_value: Variant = target.get(property_name)
+
+	if current_value == null and ui_button_checkable.pressed:
+		ui_button_checkable.set_pressed_no_signal(false)
+	elif not ui_button_checkable.pressed:
+		ui_button_checkable.set_pressed_no_signal(true)
+
+	# Show revert button if value is not the default.
+	if target.property_can_revert(property_name):
+		if property_revert_value != current_value:
+			ui_button_reset.visible = true
+		else:
+			ui_button_reset.visible = false
+
+	_extend_update_visual()
+
 ## Override function.
 ## Update the visual of the current property.
-func _update_visual() -> void:
+func _extend_update_visual() -> void:
 	pass
 
 
@@ -115,6 +129,8 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 	# If the value is checkable, show the checkable button.
 	if (property.usage & PROPERTY_USAGE_CHECKABLE) > 0:
 		checkable = true
+		if (property.usage & PROPERTY_USAGE_CHECKED) > 0:
+			ui_button_checkable.set_pressed_no_signal(true)
 
 	# Set revert value if revert value exists.
 	if target.property_can_revert(property_name):
@@ -129,6 +145,7 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 			label = "bone: " + target.get_bone_name( int(property_name.split("/")[1]) ) + " " + property_name.split("/")[-1]
 
 	_on_data_set(property)
+	_check_update()
 
 ## Override function.
 ## Called after all data has been set.
@@ -144,14 +161,19 @@ func _get_editing_state() -> bool:
 
 
 
-func _on_read_only_toggled() -> void:
-	pass
-
 ## Called when the checkable button is toggled.
-func _on_checkable_toggled(_toggled_on: bool) -> void:
-	# TODO: Does this set to null or some default value if unchecked? I think it's null.
-	# Sets to default value if checked true, I think(?).
-	pass
+func _on_checkable_toggled(toggled_on: bool) -> void:
+	if not is_instance_valid(target): return
+
+	if toggled_on:
+		# Extra check to ensure it doesn't set it to null as well.
+		if target.property_can_revert(property_name):
+			set_value(property_revert_value)
+	else:
+		set_value(null)
+
+	# Force update visual.
+	_update_visual()
 
 ## Called when the reset button is pressed.
 func _on_reset_pressed() -> void:
@@ -162,17 +184,11 @@ func _on_delete_pressed() -> void:
 	# TODO: There's no hint or usage to denote these, might just leave it as a UI thing with no function.
 	pass
 
-## Set the value of the property.
+
+
+## Set the value of the property via the event_manager. An optional suffix can be given to the property name.
 func set_value(value: Variant, property_suffix: String = "") -> void:
 	if not is_instance_valid(target) or not is_instance_valid(event_manager): return
-	if read_only: return
-
-	# Show revert button if value is not the default.
-	if target.property_can_revert(property_name):
-		if property_revert_value != value:
-			ui_button_reset.visible = true
-		else:
-			ui_button_reset.visible = false
 
 	# Set property value via event manager to allow for undo.
 	event_manager.set_property(
