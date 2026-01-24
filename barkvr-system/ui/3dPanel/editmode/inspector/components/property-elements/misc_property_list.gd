@@ -34,6 +34,7 @@ var v_box_container: VBoxContainer
 
 
 
+# TODO: Free self if object ever becomes invalid, maybe in _process?
 func edit(object: Object) -> void:
 	if v_box_container: v_box_container.queue_free()
 	current_object = object
@@ -47,75 +48,92 @@ func edit(object: Object) -> void:
 	v_box_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	add_child(v_box_container)
 
-	var start_time: float = Time.get_ticks_msec()
+	# The currently active VBoxContainer, used to track selection changes.
+	var current_v_box: VBoxContainer = v_box_container
 
-	# Last spawned category to parent fields under.
-	var current_category: Control
+	await _generate_property_list(object)
 
-	# Button group to ensure only one field is active at a time.
-	var list_button_group := ButtonGroup.new()
+	# Ensure selection hasn't changed.
+	if current_v_box != v_box_container: return
 
-	for property: Dictionary in object.get_property_list():
-		# Delay to prevent everything from loading at once, prevents stutters.
-		if start_time + 1 < Time.get_ticks_msec():
-			await get_tree().process_frame
-			start_time = Time.get_ticks_msec()
-
-		# Discard if selection has changed.
-		if object != current_object: return
-		if not is_instance_valid(object): return
-
-		print(property)
-
-		if property.usage == PROPERTY_USAGE_NONE:
-			continue
-
-		# Discard script variables that are not set to export.
-		if property.usage & PROPERTY_USAGE_SCRIPT_VARIABLE:
-			if not property.usage & PROPERTY_USAGE_EDITOR:
-				continue
-		elif property.usage == PROPERTY_USAGE_STORAGE:
-			continue
-
-		# Add a category header.
-		if property.usage & PROPERTY_USAGE_CATEGORY:
-			# TODO: Send signal to detect empty categories.
-			current_category = _new_category(property)
-
-		# Add a foldable group.
-		elif property.usage & PROPERTY_USAGE_GROUP:
-			# TODO: Add fields as children to group.
-			# This is a pain, some groups do not have a hint string to indicate their related properties.
-			# It seems they might just grab anything coming after it at that point, needs testing.
-			var group: Control = _new_group(property)
-			if current_category:
-				current_category.add_child(group)
-			else:
-				v_box_container.add_child(group)
-
-		# TODO: Subgroups.
-		elif property.usage & PROPERTY_USAGE_SUBGROUP:
-			pass
-
-		# Add as an editable property.
-		else:
-			var property_field: PropertyBase = _new_property(property)
-			if not property_field: continue
-
-			if current_category:
-				current_category.add_child(property_field)
-			else:
-				v_box_container.add_child(property_field)
-
-			property_field.button_group = list_button_group
-			property_field.scroll_container = self
-			property_field.set_data(object, property)
+	# Remove emtpy category headers.
+	for child in v_box_container.get_children():
+		if child is PropertyCategory:
+			child.check_empty()
 
 
 
 ## Returns the object currently selected in this inspector.
 func get_edited_object() -> Object:
 	return current_object
+
+
+
+func _generate_property_list(object: Object) -> void:
+	var previous_iteration_tick: int = Time.get_ticks_msec()
+
+	# The currently active VBoxContainer, used to track selection changes.
+	var current_v_box: VBoxContainer = v_box_container
+
+	# Last spawned category to parent fields under.
+	var current_category: Control
+	var current_group: Control
+	var current_group_hint: String = ""
+
+	# Button group to ensure only one field is active at a time.
+	var list_button_group := ButtonGroup.new()
+
+	for property: Dictionary in object.get_property_list():
+		# Delay to prevent everything from loading at once, prevents stutters.
+		if previous_iteration_tick + 1 < Time.get_ticks_msec():
+			await get_tree().process_frame
+			previous_iteration_tick = Time.get_ticks_msec()
+
+		# Discard if selection has changed.
+		if current_v_box != v_box_container: return
+		if not is_instance_valid(object): return
+
+		# TODO: Remove debug.
+		print(property)
+
+		match property.usage:
+			PROPERTY_USAGE_CATEGORY: # Add a category header.
+				current_category = _new_category(property)
+
+			PROPERTY_USAGE_GROUP: # Add a foldable group.
+				# TODO: Indenting, more group parenting paths.
+				var group: Control = _new_group(property)
+				current_group_hint = property.hint_string
+				current_group = group
+				if current_category:
+					current_category.add_child(group)
+				else:
+					v_box_container.add_child(group)
+			PROPERTY_USAGE_SUBGROUP: # Add a foldable subgroup.
+				# TODO: Actually make them "sub" groups.
+				# Also basically all of their logic.
+				var group: Control = _new_group(property)
+				if current_category:
+					current_category.add_child(group)
+				else:
+					v_box_container.add_child(group)
+
+			var usage when usage & PROPERTY_USAGE_EDITOR || usage & PROPERTY_USAGE_INTERNAL:
+				var property_field: PropertyBase = _new_property(property)
+				if not property_field: continue
+
+				if not current_group_hint.is_empty() && property.name.begins_with(current_group_hint):
+					current_group.get_child(0).add_child(property_field)
+				elif current_category:
+					current_category.add_child(property_field)
+				else:
+					v_box_container.add_child(property_field)
+
+				property_field.button_group = list_button_group
+				property_field.scroll_container = self
+				property_field.set_data(object, property)
+			_:
+				continue
 
 
 
