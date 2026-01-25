@@ -20,19 +20,20 @@ var checkable: bool = false:
 	set(value):
 		checkable = value
 		ui_button_checkable.visible = value
-		# TODO: Disable editable content while null.
 
 ## Deletable properties can be deleted by the user.
 var deletable: bool = false:
 	set(value):
 		deletable = value
-		# TODO: Add option to delete property.
+		ui_button_delete.visible = value
 
 ## Set this property to change the text of the label.
-var label: String = "":
+## Automatically capitalizes.
+var label: String:
 	set(value):
-		label = value
 		ui_label.text = value.capitalize()
+	get():
+		return ui_label.text
 
 ## The button group used for the background button on all properties.
 ## Ensures only one property is highlighted at any one time.
@@ -71,11 +72,6 @@ func _ready() -> void:
 
 	_setup()
 
-## Override function.
-## Called after the PropertyBase is ready.
-func _setup() -> void:
-	pass
-
 
 
 ## Repeating function to update the visual in the inspector.
@@ -90,14 +86,14 @@ func _check_update() -> void:
 			var scroll_rect: Rect2 = scroll_container.get_global_rect()
 			var rect: Rect2 = get_global_rect()
 
-			# Check if this property is currently visible in the ScrollContainer.
+			# Check if this property is currently visible in the ScrollContainer, if not, do nothing.
 			if not (rect.end.y > scroll_rect.position.y and rect.position.y < scroll_rect.end.y):
 				return
 
-		_update_visual()
+		_update_base_visual()
 
 ## Update the base visual of the current property.
-func _update_visual() -> void:
+func _update_base_visual() -> void:
 	var current_value: Variant = target.get(property_name)
 
 	if current_value == null and ui_button_checkable.pressed:
@@ -107,17 +103,15 @@ func _update_visual() -> void:
 
 	# Show revert button if value is not the default.
 	if target.property_can_revert(property_name):
-		if property_revert_value != current_value:
-			ui_button_reset.visible = true
-		else:
-			ui_button_reset.visible = false
+		match typeof(property_revert_value):
+			TYPE_FLOAT:
+				ui_button_reset.visible = not is_equal_approx(property_revert_value, current_value)
+			TYPE_VECTOR2, TYPE_VECTOR3:
+				ui_button_reset.visible = not property_revert_value.is_equal_approx(current_value)
+			_:
+				ui_button_reset.visible = property_revert_value != current_value
 
-	_extend_update_visual()
-
-## Override function.
-## Update the visual of the current property.
-func _extend_update_visual() -> void:
-	pass
+	_update_visual()
 
 
 
@@ -134,9 +128,7 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 
 	# Set revert value if revert value exists.
 	if target.property_can_revert(property_name):
-		property_revert_value = property_get_revert(property_name)
-		if property_revert_value != target.get(property_name):
-			ui_button_reset.visible = true
+		property_revert_value = target.property_get_revert(property_name)
 
 	label = property_name
 
@@ -146,18 +138,6 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 
 	_on_data_set(property)
 	_check_update()
-
-## Override function.
-## Called after all data has been set.
-func _on_data_set(_property: Dictionary) -> void:
-	pass
-
-
-
-## Override function.
-## Called on get of is_editing, used to get the current editing status.
-func _get_editing_state() -> bool:
-	return false
 
 
 
@@ -172,8 +152,8 @@ func _on_checkable_toggled(toggled_on: bool) -> void:
 	else:
 		set_value(null)
 
-	# Force update visual.
-	_update_visual()
+	# Force check visual for fast & responsive change.
+	_check_update()
 
 ## Called when the reset button is pressed.
 func _on_reset_pressed() -> void:
@@ -182,6 +162,7 @@ func _on_reset_pressed() -> void:
 ## Called when the delete button is pressed.
 func _on_delete_pressed() -> void:
 	# TODO: There's no hint or usage to denote these, might just leave it as a UI thing with no function.
+	# Only used in lists with removable elements, still considering.
 	pass
 
 
@@ -196,3 +177,25 @@ func set_value(value: Variant, property_suffix: String = "") -> void:
 		property_name + property_suffix,
 		value
 	)
+
+
+
+## Override function.
+## Called after the PropertyBase is ready.
+func _setup() -> void:
+	pass
+
+## Override function.
+## Update the unique visual of the current property.
+func _update_visual() -> void:
+	pass
+
+## Override function.
+## Called after all data has been set.
+func _on_data_set(_property: Dictionary) -> void:
+	pass
+
+## Override function.
+## Called on get of is_editing, used to check the current editing status.
+func _get_editing_state() -> bool:
+	return false
