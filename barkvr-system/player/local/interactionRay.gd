@@ -54,11 +54,21 @@ var last_collider_plane := Plane()
 ## enables smoothing which applys a lerp to the
 ## target position to smooth out jittery controller
 ## movements when aiming at things
-@export var smoothing_enabled := false
+@export var smoothing_enabled := false:
+	get:
+		var settings_instance : SettingsSingleton = SettingsSingleton.instance
+		if "laser_smoothing" in settings_instance and smoothing_enabled != settings_instance.laser_smoothing:
+			smoothing_enabled = settings_instance.laser_smoothing
+		return smoothing_enabled
 
 ## this controls the speed at which the lerp function
 ## interpolates toward the new target point
-@export var smoothing_speed := .3
+@export var smoothing_speed := .3:
+	get:
+		var settings_instance : SettingsSingleton = SettingsSingleton.instance
+		if "laser_smoothing_speed" in settings_instance and smoothing_speed != settings_instance.laser_smoothing_speed:
+			smoothing_speed = settings_instance.laser_smoothing_speed
+		return smoothing_speed
 
 ## used to track previous position the raycast casted to
 ## so we can use it as the `from` in the lerpf for smoothing
@@ -154,7 +164,10 @@ func query_raycast() -> Dictionary:
 	var rayquery := PhysicsRayQueryParameters3D.new()
 	rayquery.from = global_position
 	if smoothing_enabled:
-		smooth_raycast_position = smooth_raycast_position.lerp(to_global(target_position),smoothing_speed)
+		smooth_raycast_position = smooth_raycast_position.lerp(
+			target_position if follow_mouse else to_global(target_position),
+			smoothing_speed
+		)
 		rayquery.to = smooth_raycast_position
 	else:
 		rayquery.to = target_position
