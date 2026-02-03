@@ -6,15 +6,6 @@ extends Container
 
 
 
-@onready var ui_button_background: Button = %ButtonBackground
-@onready var ui_button_checkable: CheckBox = %ButtonCheckable
-@onready var ui_texture_type: TextureRect = %TextureType
-@onready var ui_label: Label = %Label
-@onready var ui_button_reset: Button = %ButtonReset
-@onready var ui_button_delete: Button = %ButtonDelete
-
-
-
 ## Checkable properties have a checkbox for nullable variant types.
 var checkable: bool = false:
 	set(value):
@@ -43,15 +34,15 @@ var button_group: ButtonGroup:
 	get:
 		return ui_button_background.button_group
 
+## Scroll container used for visibility detection.
 var scroll_container: ScrollContainer
 
-# Type ignores naming conventions.
 ## The event manager used for undo-able events.
-var event_manager: Bark_Journal
+var event_manager: Bark_Journal # Type ignores naming conventions.
 
 ## The target object the property belongs to.
 var target: Object
-## The property name of this property on the object.
+## The property name on the object.
 var property_name: StringName
 ## Default value of this property, if one exists.
 var property_revert_value: Variant
@@ -60,6 +51,15 @@ var property_revert_value: Variant
 var is_editing: bool:
 	get:
 		return _get_editing_state()
+
+
+
+@onready var ui_button_background: Button = %ButtonBackground
+@onready var ui_button_checkable: CheckBox = %ButtonCheckable
+@onready var ui_texture_type: TextureRect = %TextureType
+@onready var ui_label: Label = %Label
+@onready var ui_button_reset: Button = %ButtonReset
+@onready var ui_button_delete: Button = %ButtonDelete
 
 
 
@@ -77,6 +77,8 @@ func _ready() -> void:
 ## Repeating function to update the visual in the inspector.
 func _check_update() -> void:
 	# Loop function on inspector update interval + own spawn offset.
+	# Unsure as to how performant calling get_singleton constantly is, might be better to get on ready once.
+	# Settings manager would also make more sense as a real global.
 	# TODO: Zodie seems to want to change this someday, it's unoptimized.
 	create_tween().tween_callback(_check_update).set_delay(Engine.get_singleton(&"settings_manager").inspector_update_interval)
 
@@ -96,10 +98,12 @@ func _check_update() -> void:
 func _update_base_visual() -> void:
 	var current_value: Variant = target.get(property_name)
 
-	if current_value == null and ui_button_checkable.pressed:
-		ui_button_checkable.set_pressed_no_signal(false)
-	elif not ui_button_checkable.pressed:
-		ui_button_checkable.set_pressed_no_signal(true)
+	# Toggle checkbox if value is checkable.
+	if checkable:
+		if current_value == null:
+			ui_button_checkable.set_pressed_no_signal(false)
+		else:
+			ui_button_checkable.set_pressed_no_signal(true)
 
 	# Show revert button if value is not the default.
 	if target.property_can_revert(property_name):
@@ -146,9 +150,7 @@ func _on_checkable_toggled(toggled_on: bool) -> void:
 	if not is_instance_valid(target): return
 
 	if toggled_on:
-		# Extra check to ensure it doesn't set it to null as well.
-		if target.property_can_revert(property_name):
-			set_value(property_revert_value)
+		set_value(property_revert_value)
 	else:
 		set_value(null)
 

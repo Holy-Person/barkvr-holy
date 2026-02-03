@@ -1,11 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://st0g73ctru0x"]
+[gd_scene format=3 uid="uid://st0g73ctru0x"]
 
 [ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="1_e4jbb"]
 [ext_resource type="Texture2D" uid="uid://csbeh7p6lghjy" path="res://barkvr-system/assets/icons/editor-icons/Reload.svg" id="2_2qn5q"]
 [ext_resource type="Script" uid="uid://dcmli8ocp6dt4" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.gd" id="2_j6bdv"]
 [ext_resource type="Texture2D" uid="uid://boluf6baacmmd" path="res://barkvr-system/assets/icons/editor-icons/Remove.svg" id="4_j6bdv"]
 
-[node name="PropertyBase" type="PanelContainer"]
+[node name="PropertyBase" type="PanelContainer" unique_id=1602280764]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 22.0
@@ -15,14 +15,14 @@ theme = ExtResource("1_e4jbb")
 theme_type_variation = &"PropertyBasePanel"
 script = ExtResource("2_j6bdv")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2119337536]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TopBar" type="MarginContainer" parent="VBoxContainer"]
+[node name="TopBar" type="MarginContainer" parent="VBoxContainer" unique_id=1045412865]
 layout_mode = 2
 
-[node name="ButtonBackground" type="Button" parent="VBoxContainer/TopBar"]
+[node name="ButtonBackground" type="Button" parent="VBoxContainer/TopBar" unique_id=1104389288]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
@@ -30,36 +30,36 @@ theme_type_variation = &"PropertyBaseButton"
 toggle_mode = true
 action_mode = 0
 
-[node name="BoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar"]
+[node name="BoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar" unique_id=45405559]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="NameField" type="MarginContainer" parent="VBoxContainer/TopBar/BoxContainer"]
+[node name="NameField" type="MarginContainer" parent="VBoxContainer/TopBar/BoxContainer" unique_id=1904559963]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme_override_constants/margin_left = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/NameField"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/NameField" unique_id=1257124755]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ButtonCheckable" type="CheckBox" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer"]
+[node name="ButtonCheckable" type="CheckBox" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer" unique_id=387649478]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"CheckableCheckBox"
 
-[node name="TextureType" type="TextureRect" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer"]
+[node name="TextureType" type="TextureRect" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer" unique_id=836547638]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 2
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer" unique_id=1287948090]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -67,26 +67,26 @@ text = "Property Name"
 vertical_alignment = 1
 text_overrun_behavior = 1
 
-[node name="ButtonReset" type="Button" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer"]
+[node name="ButtonReset" type="Button" parent="VBoxContainer/TopBar/BoxContainer/NameField/HBoxContainer" unique_id=313385946]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("2_2qn5q")
 
-[node name="EditingFieldHorizontal" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer"]
+[node name="EditingFieldHorizontal" type="PanelContainer" parent="VBoxContainer/TopBar/BoxContainer" unique_id=137273017]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"EditingField"
 
-[node name="ButtonDelete" type="Button" parent="VBoxContainer/TopBar/BoxContainer"]
+[node name="ButtonDelete" type="Button" parent="VBoxContainer/TopBar/BoxContainer" unique_id=1454544916]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 icon = ExtResource("4_j6bdv")
 
-[node name="EditingFieldVertical" type="PanelContainer" parent="VBoxContainer"]
+[node name="EditingFieldVertical" type="PanelContainer" parent="VBoxContainer" unique_id=1035210610]
 visible = false
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
