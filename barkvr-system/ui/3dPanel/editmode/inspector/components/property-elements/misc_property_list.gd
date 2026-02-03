@@ -76,8 +76,8 @@ func _generate_property_list(object: Object) -> void:
 	var current_v_box: VBoxContainer = v_box_container
 
 	# Last spawned category to parent fields under.
-	var current_category: Control
-	var current_group: Control
+	var current_category: PropertyCategory
+	var current_group: FoldableContainer
 	var current_group_hint: String = ""
 
 	# Button group to ensure only one field is active at a time.
@@ -99,20 +99,21 @@ func _generate_property_list(object: Object) -> void:
 		match property.usage:
 			PROPERTY_USAGE_CATEGORY: # Add a category header.
 				current_category = _new_category(property)
+				v_box_container.add_child(current_category)
+				v_box_container.move_child(current_category, 0)
 
 			PROPERTY_USAGE_GROUP: # Add a foldable group.
 				# TODO: Indenting, more group parenting paths.
-				var group: Control = _new_group(property)
+				current_group = _new_group(property)
 				current_group_hint = property.hint_string
-				current_group = group
 				if current_category:
-					current_category.add_child(group)
+					current_category.add_child(current_group)
 				else:
-					v_box_container.add_child(group)
+					v_box_container.add_child(current_group)
 			PROPERTY_USAGE_SUBGROUP: # Add a foldable subgroup.
 				# TODO: Actually make them "sub" groups.
 				# Also basically all of their logic.
-				var group: Control = _new_group(property)
+				var group: FoldableContainer = _new_group(property)
 				if current_category:
 					current_category.add_child(group)
 				else:
@@ -122,6 +123,7 @@ func _generate_property_list(object: Object) -> void:
 				var property_field: PropertyBase = _new_property(property)
 				if not property_field: continue
 
+				# Parenting.
 				if not current_group_hint.is_empty() && property.name.begins_with(current_group_hint):
 					current_group.get_child(0).add_child(property_field)
 				elif current_category:
@@ -137,14 +139,12 @@ func _generate_property_list(object: Object) -> void:
 
 
 
-func _new_category(property: Dictionary) -> Control:
-	var category = PROPERTY_CATEGORY.instantiate()
-	v_box_container.add_child(category)
-	v_box_container.move_child(category, 0)
+func _new_category(property: Dictionary) -> PropertyCategory:
+	var category: PropertyCategory = PROPERTY_CATEGORY.instantiate()
 	category.set_data(property)
 	return category
 
-func _new_group(property: Dictionary) -> Control:
+func _new_group(property: Dictionary) -> FoldableContainer:
 	var group: FoldableContainer = PROPERTY_GROUP.instantiate()
 	group.title = property.name
 	return group
