@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://bk3i20e6suery"]
+[gd_scene format=3 uid="uid://bk3i20e6suery"]
 
 [ext_resource type="Theme" uid="uid://ctb75bgyj6u7e" path="res://barkvr-system/assets/property_theme.tres" id="1_i4tpn"]
 
-[node name="PropertyGroup" type="FoldableContainer"]
+[node name="PropertyGroup" type="FoldableContainer" unique_id=463144140]
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 26.0
@@ -12,6 +12,6 @@ theme = ExtResource("1_i4tpn")
 folded = true
 title = "Title"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1803503093]
 visible = false
 layout_mode = 2

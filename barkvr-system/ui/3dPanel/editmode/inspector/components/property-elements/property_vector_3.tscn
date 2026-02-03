@@ -1,98 +1,99 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0negxx0bii55"]
+[gd_scene format=3 uid="uid://d0negxx0bii55"]
 
 [ext_resource type="Script" uid="uid://hvcs0a48sp2n" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_vector_base.gd" id="1_3tlw5"]
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_ikxw4"]
 [ext_resource type="Texture2D" uid="uid://yv716hr5kpt8" path="res://barkvr-system/assets/icons/editor-icons/Unlinked.svg" id="4_expfo"]
 [ext_resource type="Texture2D" uid="uid://b4trwce52nxu0" path="res://barkvr-system/assets/icons/editor-icons/Instance.svg" id="5_ljbkq"]
 
-[node name="PropertyVector3" node_paths=PackedStringArray("line_edit_list") instance=ExtResource("1_ikxw4")]
+[node name="PropertyVector3" unique_id=1075160936 node_paths=PackedStringArray("line_edit_list", "button_ratio_link") instance=ExtResource("1_ikxw4")]
 script = ExtResource("1_3tlw5")
 line_edit_list = {
 "x": NodePath("VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer/LineEdit"),
 "y": NodePath("VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer/LineEdit"),
 "z": NodePath("VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer/LineEdit")
 }
+button_ratio_link = NodePath("VBoxContainer/EditingFieldVertical/HBoxContainer/ButtonRatioLink")
 
-[node name="EditingFieldHorizontal" parent="VBoxContainer/TopBar/BoxContainer" index="1"]
+[node name="EditingFieldHorizontal" parent="VBoxContainer/TopBar/BoxContainer" parent_id_path=PackedInt32Array(45405559) index="1" unique_id=137273017]
 visible = false
 
-[node name="EditingFieldVertical" parent="VBoxContainer" index="1"]
+[node name="EditingFieldVertical" parent="VBoxContainer" parent_id_path=PackedInt32Array(2119337536) index="1" unique_id=1035210610]
 visible = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical" index="0" unique_id=737674436]
 layout_mode = 2
 
-[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="0"]
+[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="0" unique_id=1509393608]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PanelContainerFlat"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider" index="0" unique_id=1218630612]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer" index="0" unique_id=1411132123]
 layout_mode = 2
 theme_type_variation = &"PropertySpinSliderAxis"
 
-[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer/PanelContainer" index="0"]
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer/PanelContainer" index="0" unique_id=1930838290]
 self_modulate = Color(0.8821333, 0.3741794, 0.38193867, 1)
 layout_mode = 2
 text = "x"
 horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer" index="1"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider/HBoxContainer" index="1" unique_id=1471927203]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PropertySpinSlider2" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="1"]
+[node name="PropertySpinSlider2" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="1" unique_id=560864312]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PanelContainerFlat"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2" index="0" unique_id=1203480483]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="0" unique_id=1033709365]
 layout_mode = 2
 theme_type_variation = &"PropertySpinSliderAxis"
 
-[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0"]
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0" unique_id=1811580945]
 self_modulate = Color(0.3647059, 0.6392157, 0.34117648, 1)
 layout_mode = 2
 text = "y"
 horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="1"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider2/HBoxContainer" index="1" unique_id=588999328]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="PropertySpinSlider3" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="2"]
+[node name="PropertySpinSlider3" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="2" unique_id=693631549]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"PanelContainerFlat"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3" index="0"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3" index="0" unique_id=2074923425]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="0"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="0" unique_id=1485051438]
 layout_mode = 2
 theme_type_variation = &"PropertySpinSliderAxis"
 
-[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer/PanelContainer" index="0"]
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer/PanelContainer" index="0" unique_id=1092688936]
 self_modulate = Color(0.3628999, 0.41277987, 0.7218136, 1)
 layout_mode = 2
 text = "z"
 horizontal_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="1"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer/PropertySpinSlider3/HBoxContainer" index="1" unique_id=1658994326]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ButtonRatioLink" type="TextureButton" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="3"]
-unique_name_in_owner = true
+[node name="ButtonRatioLink" type="TextureButton" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="3" unique_id=1832744728]
+visible = false
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 focus_mode = 0

@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://po0psf0jy7wg"]
+[gd_scene format=3 uid="uid://po0psf0jy7wg"]
 
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_tgmpw"]
 
-[node name="PropertyFloat" instance=ExtResource("1_tgmpw")]
+[node name="PropertyFloat" unique_id=1969464941 instance=ExtResource("1_tgmpw")]
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=1664202943]
 layout_mode = 2

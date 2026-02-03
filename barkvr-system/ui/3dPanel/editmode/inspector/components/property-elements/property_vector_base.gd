@@ -22,9 +22,11 @@ func _setup() -> void:
 		line_edit_list[axis].editing_toggled.connect(_on_line_edit_editing_toggled.bind(axis))
 
 # TODO: Finish linkable ratio stuff.
+# For some reason this just exists for things that don't have it in the EditorInspector.
 #func _on_data_set(property: Dictionary) -> void:
 #	if property.hint & PROPERTY_HINT_LINK:
 #		button_ratio_link.visible = true
+#		button_ratio_link.set_pressed_no_signal(true)
 
 func _update_visual() -> void:
 	for axis: String in line_edit_list:

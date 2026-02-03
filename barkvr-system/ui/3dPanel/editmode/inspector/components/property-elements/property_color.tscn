@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://1ynmsuc1l8yy"]
+[gd_scene format=3 uid="uid://1ynmsuc1l8yy"]
 
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_grmgw"]
 
-[node name="PropertyColor" instance=ExtResource("1_grmgw")]
+[node name="PropertyColor" unique_id=362108127 instance=ExtResource("1_grmgw")]
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" index="0"]
+[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=1989280659]
 layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://37h8b6h0iqd6"]
+[gd_scene format=3 uid="uid://37h8b6h0iqd6"]
 
 [ext_resource type="Theme" uid="uid://beb0gdkkx60br" path="res://barkvr-system/assets/inspector_theme.tres" id="1_gka8y"]
 [ext_resource type="Script" uid="uid://deebkq2523q27" path="res://barkvr-system/ui/3dPanel/editmode/inspector/panels/panel_properties.gd" id="2_qm17p"]
@@ -6,9 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://vi71vw7xj6kl" path="res://barkvr-system/assets/icons/editor-icons/Back.svg" id="4_g4r0b"]
 [ext_resource type="Texture2D" uid="uid://ccjxfcq6j1hao" path="res://barkvr-system/assets/icons/editor-icons/Forward.svg" id="5_uxwue"]
 [ext_resource type="Texture2D" uid="uid://cb2ugqkj6g25i" path="res://barkvr-system/assets/icons/editor-icons/History.svg" id="6_2ewx7"]
+[ext_resource type="Texture2D" uid="uid://b4fxdub5kj8fr" path="res://barkvr-system/assets/icons/editor-icons/Search.svg" id="6_uxwue"]
 [ext_resource type="PackedScene" uid="uid://cyrmqkbtw5sgq" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/misc_property_list.tscn" id="7_g4r0b"]
 
-[node name="PropertyEditor" type="PanelContainer"]
+[node name="PropertyEditor" type="PanelContainer" unique_id=337153550]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -18,41 +19,58 @@ theme = ExtResource("1_gka8y")
 theme_type_variation = &"FlatContainer"
 script = ExtResource("2_qm17p")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=635928989]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1223007350]
 layout_mode = 2
 
-[node name="TargetName" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+[node name="TargetName" type="LineEdit" parent="VBoxContainer/HBoxContainer" unique_id=1971716953]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ButtonDocumentation" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ButtonDocumentation" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1970832729]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("3_56tvb")
 
-[node name="ButtonPrevious" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ButtonPrevious" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=1439677715]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("4_g4r0b")
 
-[node name="ButtonNext" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/ButtonPrevious" unique_id=533039339]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ButtonNext" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=43089994]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("5_uxwue")
 
-[node name="ButtonHistory" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer" unique_id=1821231229]
+visible = false
+layout_mode = 2
+
+[node name="FilterProperties" type="LineEdit" parent="VBoxContainer/HBoxContainer2" unique_id=1737428467]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+right_icon = ExtResource("6_uxwue")
+
+[node name="ButtonHistory" type="Button" parent="VBoxContainer/HBoxContainer2" unique_id=2095230450]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 icon = ExtResource("6_2ewx7")
 
-[node name="PropertyList" parent="VBoxContainer" instance=ExtResource("7_g4r0b")]
+[node name="PropertyList" parent="VBoxContainer" unique_id=1950847737 instance=ExtResource("7_g4r0b")]
 unique_name_in_owner = true
 layout_mode = 2
