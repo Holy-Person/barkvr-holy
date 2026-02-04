@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://bho6ojyyrbvsp"]
 
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_81y2a"]
+[ext_resource type="Script" uid="uid://bgohyb32200pu" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_enum.gd" id="2_kdtsm"]
 
 [node name="PropertyEnum" unique_id=1631442344 instance=ExtResource("1_81y2a")]
+script = ExtResource("2_kdtsm")
 
 [node name="OptionButton" type="OptionButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=436482091]
 unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
+allow_reselect = true
