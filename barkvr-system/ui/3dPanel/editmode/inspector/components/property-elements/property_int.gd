@@ -13,6 +13,7 @@ extends PropertyBase
 
 func _setup() -> void:
 	spin_box.value_changed.connect(_on_spin_box_value_changed)
+	spin_box.get_line_edit().text_submitted.connect(_on_spin_box_text_submitted)
 
 	# Prevent null revert values.
 	if property_revert_value == null:
@@ -29,6 +30,9 @@ func _update_visual() -> void:
 
 func _on_spin_box_value_changed(value: float) -> void:
 	set_value( int(value) )
+
+func _on_spin_box_text_submitted(_new_text: String) -> void:
+	spin_box.get_line_edit().release_focus()
 
 
 
