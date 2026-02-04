@@ -5,6 +5,11 @@
 [ext_resource type="Texture2D" uid="uid://d074i6vaboce5" path="res://barkvr-system/assets/icons/editor-icons/GuiCheckedDisabled.svg" id="2_co4j5"]
 [ext_resource type="Texture2D" uid="uid://0r57jf1504ig" path="res://barkvr-system/assets/icons/editor-icons/GuiUnchecked.svg" id="3_5v15x"]
 [ext_resource type="Texture2D" uid="uid://ber1k2xvy4bii" path="res://barkvr-system/assets/icons/editor-icons/GuiUncheckedDisabled.svg" id="4_1bcok"]
+[ext_resource type="Texture2D" uid="uid://bfcmvawvk2262" path="res://barkvr-system/assets/icons/editor-icons/GuiOptionArrow.svg" id="6_3anre"]
+[ext_resource type="Texture2D" uid="uid://vu3uradw50jp" path="res://barkvr-system/assets/icons/editor-icons/GuiRadioChecked.svg" id="6_ar2qe"]
+[ext_resource type="Texture2D" uid="uid://c2pwjj65nq5p7" path="res://barkvr-system/assets/icons/editor-icons/GuiRadioCheckedDisabled.svg" id="7_3anre"]
+[ext_resource type="Texture2D" uid="uid://c3ee7oxdtdc2x" path="res://barkvr-system/assets/icons/editor-icons/GuiRadioUnchecked.svg" id="8_ua4ea"]
+[ext_resource type="Texture2D" uid="uid://di11628xxxfkm" path="res://barkvr-system/assets/icons/editor-icons/GuiRadioUncheckedDisabled.svg" id="9_ext0n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ar2qe"]
 content_margin_left = 3.0
@@ -125,7 +130,70 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jw7s5"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+draw_center = false
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ext0n"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+draw_center = false
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aivdd"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+draw_center = false
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3s2yj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jqy8q"]
+content_margin_left = 6.0
+content_margin_top = 5.0
+content_margin_right = 6.0
+content_margin_bottom = 5.0
+bg_color = Color(1, 1, 1, 0.11)
+border_color = Color(1, 1, 1, 0.05)
+corner_detail = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_aivdd"]
+color = Color(1, 1, 1, 0.1)
+grow_begin = 0.0
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qvx73"]
+color = Color(1, 1, 1, 0.1)
+grow_end = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7yqbb"]
+bg_color = Color(0.161, 0.161, 0.161, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.088549994, 0.088549994, 0.088549994, 1)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_86y2m"]
+color = Color(1, 1, 1, 0.1)
+grow_begin = 0.0
+grow_end = 0.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ichvv"]
 
@@ -139,6 +207,17 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_co4j5"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qvx73"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 7.0
+content_margin_bottom = 7.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpoyx"]
 content_margin_left = 5.0
 content_margin_right = 5.0
@@ -149,17 +228,6 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_co4j5"]
-content_margin_left = 7.0
-content_margin_top = 7.0
-content_margin_right = 7.0
-content_margin_bottom = 7.0
-bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
 
 [resource]
 Button/styles/hover = SubResource("StyleBoxFlat_ar2qe")
@@ -202,10 +270,40 @@ Label/colors/font_color = Color(0.93333334, 0.93333334, 0.93333334, 1)
 LineEdit/colors/selection_color = Color(0.20392157, 0.31764707, 0.46666667, 1)
 LineEdit/styles/focus = SubResource("StyleBoxFlat_7kkr1")
 LineEdit/styles/normal = SubResource("StyleBoxFlat_3s2yj")
-OptionButton/colors/font_pressed_color = Color(0.54901963, 0.7411765, 1, 1)
-OptionButton/colors/icon_pressed_color = Color(0.54901963, 0.7411765, 1, 1)
+OptionButton/colors/font_hover_pressed_color = Color(0.42352942, 0.60784316, 0.85490197, 1)
+OptionButton/colors/font_pressed_color = Color(0.29411766, 0.54509807, 0.8784314, 1)
+OptionButton/constants/modulate_arrow = 1
+OptionButton/icons/arrow = ExtResource("6_3anre")
+OptionButton/styles/disabled = SubResource("StyleBoxFlat_jw7s5")
+OptionButton/styles/hover = SubResource("StyleBoxFlat_ext0n")
+OptionButton/styles/hover_pressed = SubResource("StyleBoxFlat_jw7s5")
+OptionButton/styles/normal = SubResource("StyleBoxFlat_jw7s5")
+OptionButton/styles/pressed = SubResource("StyleBoxFlat_aivdd")
 PanelContainerFlat/base_type = &"PanelContainer"
 PanelContainerFlat/styles/panel = SubResource("StyleBoxEmpty_3s2yj")
+PopupMenu/colors/font_accelerator_color = Color(1, 1, 1, 0.35)
+PopupMenu/colors/font_color = Color(0.79025, 0.79025, 0.79025, 1)
+PopupMenu/colors/font_disabled_color = Color(1, 1, 1, 0.35)
+PopupMenu/colors/font_hover_color = Color(0.89512503, 0.89512503, 0.89512503, 1)
+PopupMenu/colors/font_outline_color = Color(0, 0, 0, 0)
+PopupMenu/colors/font_separator_color = Color(1, 1, 1, 0.35)
+PopupMenu/constants/item_end_padding = 4
+PopupMenu/constants/item_start_padding = 4
+PopupMenu/constants/outline_size = 0
+PopupMenu/constants/v_separation = 10
+PopupMenu/icons/checked = ExtResource("1_ichvv")
+PopupMenu/icons/checked_disabled = ExtResource("2_co4j5")
+PopupMenu/icons/radio_checked = ExtResource("6_ar2qe")
+PopupMenu/icons/radio_checked_disabled = ExtResource("7_3anre")
+PopupMenu/icons/radio_unchecked = ExtResource("8_ua4ea")
+PopupMenu/icons/radio_unchecked_disabled = ExtResource("9_ext0n")
+PopupMenu/icons/unchecked = ExtResource("3_5v15x")
+PopupMenu/icons/unchecked_disabled = ExtResource("4_1bcok")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_jqy8q")
+PopupMenu/styles/labeled_separator_left = SubResource("StyleBoxLine_aivdd")
+PopupMenu/styles/labeled_separator_right = SubResource("StyleBoxLine_qvx73")
+PopupMenu/styles/panel = SubResource("StyleBoxFlat_7yqbb")
+PopupMenu/styles/separator = SubResource("StyleBoxLine_86y2m")
 PropertyBaseButton/base_type = &"Button"
 PropertyBaseButton/styles/disabled = SubResource("StyleBoxEmpty_ichvv")
 PropertyBaseButton/styles/focus = SubResource("StyleBoxEmpty_ichvv")
@@ -215,6 +313,7 @@ PropertyBaseButton/styles/normal = SubResource("StyleBoxEmpty_ichvv")
 PropertyBaseButton/styles/pressed = SubResource("StyleBoxFlat_3anre")
 PropertyBasePanel/base_type = &"PanelContainer"
 PropertyBasePanel/styles/panel = SubResource("StyleBoxEmpty_co4j5")
+PropertyListScroll/base_type = &"ScrollContainer"
+PropertyListScroll/styles/panel = SubResource("StyleBoxFlat_qvx73")
 PropertySpinSliderAxis/base_type = &"PanelContainer"
 PropertySpinSliderAxis/styles/panel = SubResource("StyleBoxFlat_bpoyx")
-ScrollContainer/styles/panel = SubResource("StyleBoxFlat_co4j5")
