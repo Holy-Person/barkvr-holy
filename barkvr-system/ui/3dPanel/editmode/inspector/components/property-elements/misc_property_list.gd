@@ -159,15 +159,14 @@ func _new_property(property: Dictionary) -> PropertyBase:
 			# TODO: Could do custom layer fields: PROPERTY_HINT_LAYERS_2D_RENDER
 			if property.hint == PROPERTY_HINT_ENUM:
 				property_field = FIELD_ENUM.instantiate()
-				#tmp.set_data(fieldname, new_target, prop.name, prop)
 			else:
 				property_field = FIELD_INT.instantiate()
 		TYPE_FLOAT:
 			property_field = FIELD_FLOAT.instantiate()
 		TYPE_STRING, TYPE_STRING_NAME:
+			# TODO: Could do large text fields: PROPERTY_HINT_MULTILINE_TEXT
 			if property.hint == PROPERTY_HINT_ENUM:
 				property_field = FIELD_ENUM.instantiate()
-				#tmp.set_data(fieldname, new_target, prop.name, prop, true)
 			else:
 				property_field = FIELD_STRING.instantiate()
 		TYPE_COLOR:

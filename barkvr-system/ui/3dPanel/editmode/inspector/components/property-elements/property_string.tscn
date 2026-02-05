@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bpcdhejgbrn6i"]
 
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_fwo5e"]
+[ext_resource type="Script" uid="uid://cgugi85y5qx06" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_string.gd" id="2_8tpeg"]
 
 [node name="PropertyString" unique_id=388919217 instance=ExtResource("1_fwo5e")]
+script = ExtResource("2_8tpeg")
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=433277415]
 unique_name_in_owner = true
