@@ -9,3 +9,4 @@ script = ExtResource("2_8tpeg")
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=433277415]
 unique_name_in_owner = true
 layout_mode = 2
+theme_type_variation = &"PropertyLineEdit"

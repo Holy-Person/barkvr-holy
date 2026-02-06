@@ -18,7 +18,7 @@ func _setup() -> void:
 
 func _on_data_set(property: Dictionary) -> void:
 	# Set placeholder text if one is defined.
-	if property.hint & PROPERTY_HINT_PLACEHOLDER_TEXT:
+	if property.hint == PROPERTY_HINT_PLACEHOLDER_TEXT:
 		line_edit.placeholder_text = property.hint_string
 
 

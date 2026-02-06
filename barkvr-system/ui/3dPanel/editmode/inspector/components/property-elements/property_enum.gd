@@ -18,13 +18,13 @@ var is_string_enum: bool = false
 func _setup() -> void:
 	option_button.item_selected.connect(_on_option_button_item_selected)
 
-func _on_data_set(_property: Dictionary) -> void:
+func _on_data_set(property: Dictionary) -> void:
 	# Get the hint string as String, see PropertyHint in @GlobalScope.
-	var hint_string: String = _property.hint_string
+	var hint_string: String = property.hint_string
 	# Discard if no hint string is provided.
 	if hint_string.is_empty(): queue_free()
 
-	is_string_enum = _property.type != TYPE_INT
+	is_string_enum = property.type != TYPE_INT
 
 	# Leftover from previous version, unsure on function.
 	if is_string_enum: option_button.add_item("None")
