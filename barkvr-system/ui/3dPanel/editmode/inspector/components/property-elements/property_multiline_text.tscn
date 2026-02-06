@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://ejwq7pjdhfty"]
+
+[ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_bvnag"]
+[ext_resource type="Script" uid="uid://o737hx1bi002" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_multiline_text.gd" id="2_hs1mp"]
+[ext_resource type="Texture2D" uid="uid://bxoqndnxqaxi0" path="res://barkvr-system/assets/icons/editor-icons/DistractionFree.svg" id="3_ukpxs"]
+
+[node name="PropertyMultilineText" unique_id=1602280764 instance=ExtResource("1_bvnag")]
+script = ExtResource("2_hs1mp")
+
+[node name="EditingFieldHorizontal" parent="VBoxContainer/TopBar/BoxContainer" parent_id_path=PackedInt32Array(45405559) index="1" unique_id=137273017]
+visible = false
+
+[node name="EditingFieldVertical" parent="VBoxContainer" parent_id_path=PackedInt32Array(2119337536) index="1" unique_id=1035210610]
+visible = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical" index="0" unique_id=1026872802]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="0" unique_id=1400715155]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 126)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonDistractionFree" type="Button" parent="VBoxContainer/EditingFieldVertical/HBoxContainer" index="1" unique_id=1781620997]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("3_ukpxs")
+flat = true

@@ -20,6 +20,7 @@ const FIELD_BOOL = preload("uid://bcgft7j8haksh")
 const FIELD_INT = preload("uid://dyiaij1fj5sje")
 const FIELD_FLOAT = preload("uid://po0psf0jy7wg")
 const FIELD_STRING = preload("uid://bpcdhejgbrn6i")
+const FIELD_MULTILINE_TEXT = preload("uid://ejwq7pjdhfty")
 const FIELD_COLOR = preload("uid://1ynmsuc1l8yy")
 const FIELD_VECTOR_2 = preload("uid://dsinfbuvvxpxu")
 const FIELD_VECTOR_3 = preload("uid://d0negxx0bii55")
@@ -164,9 +165,10 @@ func _new_property(property: Dictionary) -> PropertyBase:
 		TYPE_FLOAT:
 			property_field = FIELD_FLOAT.instantiate()
 		TYPE_STRING, TYPE_STRING_NAME:
-			# TODO: Could do large text fields: PROPERTY_HINT_MULTILINE_TEXT
 			if property.hint == PROPERTY_HINT_ENUM:
 				property_field = FIELD_ENUM.instantiate()
+			elif property.hint == PROPERTY_HINT_MULTILINE_TEXT:
+				property_field = FIELD_MULTILINE_TEXT.instantiate()
 			else:
 				property_field = FIELD_STRING.instantiate()
 		TYPE_COLOR:
