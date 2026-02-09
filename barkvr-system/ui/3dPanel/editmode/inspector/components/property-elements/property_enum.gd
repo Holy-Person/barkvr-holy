@@ -46,20 +46,20 @@ func _update_visual() -> void:
 
 
 
-func _on_option_button_item_selected(index: int) -> void:
-	if is_string_enum: set_value(option_button.get_item_text(index))
-	else: set_value(option_button.get_item_id(index))
-
-
-
-func _get_editing_state() -> bool:
-	return option_button.get_popup().visible
-
-
-
 ## Get the index of an item based on the displayed text.
 func get_item_index_from_text(item_text: String) -> int:
 	for i: int in option_button.item_count:
 		if option_button.get_item_text(i) == item_text:
 			return i
 	return 0
+
+
+
+func _on_option_button_item_selected(index: int) -> void:
+	if is_string_enum:emit_changed(option_button.get_item_text(index))
+	else: emit_changed(option_button.get_item_id(index))
+
+
+
+func _get_editing_state() -> bool:
+	return option_button.get_popup().visible

@@ -24,6 +24,7 @@ layout_mode = 2
 
 [node name="ButtonBackground" type="Button" parent="VBoxContainer/TopBar" unique_id=1104389288]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"PropertyBaseButton"

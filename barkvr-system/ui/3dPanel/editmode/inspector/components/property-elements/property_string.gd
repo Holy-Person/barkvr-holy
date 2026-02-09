@@ -32,7 +32,7 @@ func _update_visual() -> void:
 ## Setting the text via code does not trigger this.
 func _on_line_edit_text_changed(new_text: String) -> void:
 	# Set directly to avoid spamming the undo-system.
-	target.set(property_name, new_text)
+	emit_changed(new_text, false)
 
 ## Called when editing starts/ends on a LineEdit.
 ## Used to finalize the value when editing ends and turn it into an undoable step.
@@ -40,7 +40,7 @@ func _on_line_edit_text_changed(new_text: String) -> void:
 func _on_line_edit_editing_toggled(toggled_on: bool) -> void:
 	if toggled_on: return
 
-	set_value(line_edit.text)
+	emit_changed(line_edit.text)
 
 ## Called when text is submitted using enter on a LineEdit.
 ## This ensures that focus is fully released.

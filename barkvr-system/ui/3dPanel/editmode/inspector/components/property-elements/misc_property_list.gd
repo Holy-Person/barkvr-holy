@@ -25,15 +25,22 @@ const FIELD_COLOR = preload("uid://1ynmsuc1l8yy")
 const FIELD_VECTOR_2 = preload("uid://dsinfbuvvxpxu")
 const FIELD_VECTOR_3 = preload("uid://d0negxx0bii55")
 const FIELD_ENUM = preload("uid://bho6ojyyrbvsp")
+#const FIELD_ARRAY = preload("uid://0v3uyc87pkoa")
+#const FIELD_OBJECT = preload()
 
 
 
+## The event manager used for undo-able events.
+var event_manager: Bark_Journal # Type ignores naming conventions.
 ## The current object being edited.
 var current_object: Object
 ## VBoxContainer to hold the properties.
 var v_box_container: VBoxContainer
 
 
+
+func _ready() -> void:
+	event_manager = Engine.get_singleton(&"event_manager")
 
 # TODO: Free self if object ever becomes invalid, maybe in _process?
 func edit(object: Object) -> void:
@@ -133,8 +140,15 @@ func _generate_property_list(object: Object) -> void:
 					v_box_container.add_child(property_field)
 
 				property_field.button_group = list_button_group
+				property_field.label = property.name.capitalize()
 				property_field.scroll_container = self
-				property_field.set_data(object, property)
+				property_field.property_changed.connect(_on_property_field_property_changed)
+				property_field.set_object_and_property(object, property)
+
+
+				if current_object is Skeleton3D: # Singled out for autocomplete recognition.
+					if property.name.contains("bones/"):
+						property_field.label = "bone: " + current_object.get_bone_name( int(property.name.split("/")[1]) ) + " " + property.name.split("/")[-1]
 			_:
 				continue
 
@@ -151,6 +165,7 @@ func _new_group(property: Dictionary) -> FoldableContainer:
 	return group
 
 func _new_property(property: Dictionary) -> PropertyBase:
+	# Initial return value.
 	var property_field: PropertyBase
 
 	match property.type:
@@ -177,11 +192,32 @@ func _new_property(property: Dictionary) -> PropertyBase:
 			property_field = FIELD_VECTOR_2.instantiate()
 		TYPE_VECTOR3, TYPE_VECTOR3I:
 			property_field = FIELD_VECTOR_3.instantiate()
-		TYPE_ARRAY:
-			pass
-		TYPE_OBJECT:
-			pass
+		#TYPE_ARRAY:
+			#property_field = FIELD_ARRAY.instantiate()
+		#TYPE_OBJECT:
+			#property_field = FIELD_OBJECT.instantiate()
 		_:
 			print("Non-handled type: ", property.type)
 
 	return property_field
+
+## Set the value of the property via the event_manager. An optional suffix can be given to the property name.
+func _on_property_field_property_changed(property: StringName, value: Variant, record_undo: bool) -> void:
+	if not is_instance_valid(current_object) or not is_instance_valid(event_manager): return
+
+	if not record_undo: # Set property directly.
+		if property.contains(":"):
+			var split: PackedStringArray = property.split(":")
+			current_object[split[0]][split[1]] = value
+		else:
+			current_object[property] = value
+	else: # Set property via event manager to register into the undo system.
+		event_manager.set_property(
+			event_manager.root.get_path_to(current_object),
+			property,
+			value
+		)
+
+# Might be worth considering to copy this function.
+#static func instantiate_property_editor(object: Object, type: Variant.Type, path: String, hint: PropertyHint, hint_text: String, usage: int) -> PropertyBase:
+#	pass

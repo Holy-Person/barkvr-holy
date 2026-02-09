@@ -29,7 +29,7 @@ func _update_visual() -> void:
 
 
 func _on_spin_box_value_changed(value: float) -> void:
-	set_value( int(value) )
+	emit_changed( int(value) )
 
 func _on_spin_box_text_submitted(_new_text: String) -> void:
 	spin_box.get_line_edit().release_focus()

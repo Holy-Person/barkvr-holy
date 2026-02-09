@@ -6,6 +6,12 @@ extends Container
 
 
 
+signal property_changed(property: StringName, value: Variant, record_undo: bool)
+signal property_deleted(property: StringName)
+signal request_refresh()
+
+
+
 ## Checkable properties have a checkbox for nullable variant types.
 var checkable: bool = false:
 	set(value):
@@ -19,26 +25,24 @@ var deletable: bool = false:
 		ui_button_delete.visible = value
 
 ## Set this property to change the text of the label.
-## Automatically capitalizes.
 var label: String:
 	set(value):
-		ui_label.text = value.capitalize()
+		ui_label.text = value
 	get():
 		return ui_label.text
 
 ## The button group used for the background button on all properties.
 ## Ensures only one property is highlighted at any one time.
+## Background button will not be visible without setting this value.
 var button_group: ButtonGroup:
 	set(value):
+		ui_button_background.show()
 		ui_button_background.button_group = value
 	get:
 		return ui_button_background.button_group
 
 ## Scroll container used for visibility detection.
 var scroll_container: ScrollContainer
-
-## The event manager used for undo-able events.
-var event_manager: Bark_Journal # Type ignores naming conventions.
 
 ## The target object the property belongs to.
 var target: Object
@@ -64,8 +68,6 @@ var is_editing: bool:
 
 
 func _ready() -> void:
-	event_manager = Engine.get_singleton(&"event_manager")
-
 	ui_button_checkable.toggled.connect(_on_checkable_toggled)
 	ui_button_reset.pressed.connect(_on_reset_pressed)
 	ui_button_delete.pressed.connect(_on_delete_pressed)
@@ -77,8 +79,6 @@ func _ready() -> void:
 ## Repeating function to update the visual in the inspector.
 func _check_update() -> void:
 	# Loop function on inspector update interval + own spawn offset.
-	# Unsure as to how performant calling get_singleton constantly is, might be better to get on ready once.
-	# Settings manager would also make more sense as a real global.
 	# TODO: Zodie seems to want to change this someday, it's unoptimized.
 	create_tween().tween_callback(_check_update).set_delay(Engine.get_singleton(&"settings_manager").inspector_update_interval)
 
@@ -105,7 +105,8 @@ func _update_base_visual() -> void:
 		else:
 			ui_button_checkable.set_pressed_no_signal(true)
 
-	# Show revert button if value is not the default.
+	# Show revert button if value and revert value don't match.
+	# TODO: Might be worth allowing for resets when there is no given default value.
 	if target.property_can_revert(property_name):
 		match typeof(property_revert_value):
 			TYPE_FLOAT:
@@ -119,26 +120,20 @@ func _update_base_visual() -> void:
 
 
 
-## Set the target object and property data of this element.
-func set_data(target_object: Object, property: Dictionary) -> void:
-	target = target_object
+## Assigns object and property to edit.
+func set_object_and_property(object: Object, property: Dictionary) -> void:
+	target = object
 	property_name = property.name
 
-	# If the value is checkable, show the checkable button.
+	# Show checkable button if usage is checkable.
 	if (property.usage & PROPERTY_USAGE_CHECKABLE) > 0:
 		checkable = true
 		if (property.usage & PROPERTY_USAGE_CHECKED) > 0:
 			ui_button_checkable.set_pressed_no_signal(true)
 
-	# Set revert value if revert value exists.
+	# Set revert value if one exists.
 	if target.property_can_revert(property_name):
 		property_revert_value = target.property_get_revert(property_name)
-
-	label = property_name
-
-	if target is Skeleton3D: # Singled out for autocomplete recognition.
-		if property_name.contains("bones/"):
-			label = "bone: " + target.get_bone_name( int(property_name.split("/")[1]) ) + " " + property_name.split("/")[-1]
 
 	_on_data_set(property)
 	_check_update()
@@ -149,37 +144,32 @@ func set_data(target_object: Object, property: Dictionary) -> void:
 func _on_checkable_toggled(toggled_on: bool) -> void:
 	if not is_instance_valid(target): return
 
-	if toggled_on:
-		set_value(property_revert_value)
-	else:
-		set_value(null)
+	if toggled_on: emit_changed(property_revert_value)
+	else: emit_changed(null)
 
 	# Force check visual for fast & responsive change.
 	_check_update()
 
 ## Called when the reset button is pressed.
 func _on_reset_pressed() -> void:
-	set_value(property_revert_value)
+	emit_changed(property_revert_value)
 
 ## Called when the delete button is pressed.
 func _on_delete_pressed() -> void:
-	# TODO: There's no hint or usage to denote these, might just leave it as a UI thing with no function.
-	# Only used in lists with removable elements, still considering.
-	pass
+	property_deleted.emit(property_name)
 
 
 
-## Set the value of the property via the event_manager. An optional suffix can be given to the property name.
-func set_value(value: Variant, property_suffix: String = "") -> void:
-	if not is_instance_valid(target) or not is_instance_valid(event_manager): return
+## Call this method to apply a value change.
+## Setting [code]record_undo[/code] to [code]false[/code] sets the value directly.
+## A suffix to the current property's name can be defined with [code]property_suffix[/code].
+func emit_changed(value: Variant, record_undo: bool = true, property_suffix: String = "") -> void:
+	if not is_instance_valid(target): return
 
-	# Set property value via event manager to allow for undo.
-	event_manager.set_property(
-		event_manager.root.get_path_to(target),
-		property_name + property_suffix,
-		value
-	)
-
+	if property_suffix.is_empty():
+		property_changed.emit(property_name, value, record_undo)
+	else:
+		property_changed.emit(property_name + ":" + property_suffix, value, record_undo)
 
 
 ## Override function.
@@ -188,7 +178,7 @@ func _setup() -> void:
 	pass
 
 ## Override function.
-## Update the unique visual of the current property.
+## Update the unique visuals of the current property.
 func _update_visual() -> void:
 	pass
 

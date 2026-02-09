@@ -26,7 +26,7 @@ func _update_visual() -> void:
 func _on_text_edit_text_changed() -> void:
 	# Set directly to avoid spamming the undo system.
 	# There is currently no good way of handling these with the undo system.
-	target.set(property_name, text_edit.text)
+	emit_changed(text_edit.text, false)
 
 
 

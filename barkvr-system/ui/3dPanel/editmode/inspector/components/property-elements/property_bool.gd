@@ -29,4 +29,4 @@ func _update_visual() -> void:
 
 
 func _on_check_box_toggled(toggled_on: bool) -> void:
-	set_value(toggled_on)
+	emit_changed(toggled_on)

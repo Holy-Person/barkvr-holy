@@ -46,7 +46,7 @@ func set_axis_text(axis: String) -> void:
 ## Setting the text via code does not trigger this.
 func _on_line_edit_text_changed(new_text: String, axis: String) -> void:
 	# Set directly to avoid spamming the undo-system.
-	target[property_name][axis] = float(new_text)
+	emit_changed(float(new_text), false, axis)
 
 ## Called when editing starts/ends on a LineEdit.
 ## Used to do evaluations of mathematical expressions when editing ends.
@@ -69,7 +69,7 @@ func _on_line_edit_editing_toggled(toggled_on: bool, axis: String) -> void:
 		set_axis_text(axis)
 		return
 
-	set_value(float(result), ":" + axis)
+	emit_changed(float(result), true, axis)
 	set_axis_text(axis)
 
 	# This only helps with the visual at the current moment.

@@ -29,7 +29,7 @@ func _update_visual() -> void:
 ## Setting the text via code does not trigger this.
 func _on_line_edit_text_changed(new_text: String) -> void:
 	# Set directly to avoid spamming the undo-system.
-	target[property_name] = new_text.to_float()
+	emit_changed(new_text.to_float(), false)
 
 ## Called when editing starts/ends on the LineEdit.
 ## Used to do evaluations of mathematical expressions when editing ends.
@@ -49,7 +49,7 @@ func _on_line_edit_editing_toggled(toggled_on: bool) -> void:
 		_update_visual()
 		return
 
-	set_value(float(result))
+	emit_changed(float(result))
 	_update_visual()
 
 	line_edit.release_focus()
