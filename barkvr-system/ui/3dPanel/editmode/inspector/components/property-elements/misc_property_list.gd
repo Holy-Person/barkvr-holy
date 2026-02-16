@@ -14,7 +14,6 @@ extends ScrollContainer
 
 
 const PROPERTY_CATEGORY = preload("uid://cw7vdx8shf5ca")
-const PROPERTY_GROUP = preload("uid://bk3i20e6suery")
 
 const FIELD_BOOL = preload("uid://bcgft7j8haksh")
 const FIELD_INT = preload("uid://dyiaij1fj5sje")
@@ -59,13 +58,14 @@ func edit(object: Object) -> void:
 	# The currently active VBoxContainer, used to track selection changes.
 	var current_v_box: VBoxContainer = v_box_container
 
-	await _generate_property_list(object)
+	await _generate_property_list(object, current_v_box)
+	await get_tree().process_frame
 
 	# Ensure selection hasn't changed.
 	if current_v_box != v_box_container: return
 
 	# Remove emtpy category headers.
-	for child in v_box_container.get_children():
+	for child in current_v_box.get_children():
 		if child is PropertyCategory:
 			child.check_empty()
 
@@ -77,80 +77,55 @@ func get_edited_object() -> Object:
 
 
 
-func _generate_property_list(object: Object) -> void:
-	var previous_iteration_tick: int = Time.get_ticks_msec()
-
-	# The currently active VBoxContainer, used to track selection changes.
-	var current_v_box: VBoxContainer = v_box_container
-
+func _generate_property_list(object: Object, v_box: VBoxContainer) -> void:
 	# Last spawned category to parent fields under.
 	var current_category: PropertyCategory
-	var current_group: FoldableContainer
-	var current_group_hint: String = ""
-
 	# Button group to ensure only one field is active at a time.
 	var list_button_group := ButtonGroup.new()
 
+	var previous_iteration_tick: int
 	for property: Dictionary in object.get_property_list():
 		# Delay to prevent everything from loading at once, prevents stutters.
-		if previous_iteration_tick + 1 < Time.get_ticks_msec():
-			await get_tree().process_frame
-			previous_iteration_tick = Time.get_ticks_msec()
+		if previous_iteration_tick + 1 > Time.get_ticks_msec(): await get_tree().process_frame
+		previous_iteration_tick = Time.get_ticks_msec()
 
 		# Discard if selection has changed.
-		if current_v_box != v_box_container: return
+		if v_box != v_box_container: return
 		if not is_instance_valid(object): return
+
+		var p_type: Variant.Type = property.type
+		var p_name: String = property.name
+		var p_hint: PropertyHint = property.hint
+		var p_hint_text: String = property.hint_string
+		var p_usage: int = property.usage
 
 		# TODO: Remove debug.
 		print(property)
 
-		match property.usage:
-			PROPERTY_USAGE_CATEGORY: # Add a category header.
+		match p_usage:
+			# Category header.
+			PROPERTY_USAGE_CATEGORY:
 				current_category = _new_category(property)
-				v_box_container.add_child(current_category)
-				v_box_container.move_child(current_category, 0)
+				v_box.add_child(current_category)
+				v_box.move_child(current_category, 0)
 
-			PROPERTY_USAGE_GROUP: # Add a foldable group.
-				# TODO: Indenting, more group parenting paths.
-				current_group = _new_group(property)
-				current_group_hint = property.hint_string
-				if current_category:
-					current_category.add_child(current_group)
-				else:
-					v_box_container.add_child(current_group)
-			PROPERTY_USAGE_SUBGROUP: # Add a foldable subgroup.
-				# TODO: Actually make them "sub" groups.
-				# Also basically all of their logic.
-				var group: FoldableContainer = _new_group(property)
-				if current_category:
-					current_category.add_child(group)
-				else:
-					v_box_container.add_child(group)
+			# NOTE: Too complicated to generate correctly, left out for the time being.
+			# Foldable group.
+			PROPERTY_USAGE_GROUP: continue
+			# Foldable subgroup.
+			PROPERTY_USAGE_SUBGROUP: continue
 
-			var usage when usage & PROPERTY_USAGE_EDITOR || usage & PROPERTY_USAGE_INTERNAL:
-				var property_field: PropertyBase = _new_property(property)
-				if not property_field: continue
+			# Property editor.
+			var usage when p_usage & PROPERTY_USAGE_EDITOR || usage & PROPERTY_USAGE_INTERNAL:
+				var property_editor: PropertyBase = instantiate_property_editor(object, p_type, p_name, p_hint, p_hint_text, p_usage)
+				if not property_editor: continue
 
-				# Parenting.
-				if not current_group_hint.is_empty() && property.name.begins_with(current_group_hint):
-					current_group.get_child(0).add_child(property_field)
-				elif current_category:
-					current_category.add_child(property_field)
-				else:
-					v_box_container.add_child(property_field)
+				property_editor.button_group = list_button_group
+				property_editor.scroll_container = self
+				property_editor.property_changed.connect(_on_property_field_property_changed)
 
-				property_field.button_group = list_button_group
-				property_field.label = property.name.capitalize()
-				property_field.scroll_container = self
-				property_field.property_changed.connect(_on_property_field_property_changed)
-				property_field.set_object_and_property(object, property)
-
-
-				if current_object is Skeleton3D: # Singled out for autocomplete recognition.
-					if property.name.contains("bones/"):
-						property_field.label = "bone: " + current_object.get_bone_name( int(property.name.split("/")[1]) ) + " " + property.name.split("/")[-1]
-			_:
-				continue
+				if current_category: current_category.add_child(property_editor)
+				else: v_box.add_child(property_editor)
 
 
 
@@ -158,48 +133,6 @@ func _new_category(property: Dictionary) -> PropertyCategory:
 	var category: PropertyCategory = PROPERTY_CATEGORY.instantiate()
 	category.set_data(property)
 	return category
-
-func _new_group(property: Dictionary) -> FoldableContainer:
-	var group: FoldableContainer = PROPERTY_GROUP.instantiate()
-	group.title = property.name
-	return group
-
-func _new_property(property: Dictionary) -> PropertyBase:
-	# Initial return value.
-	var property_field: PropertyBase
-
-	match property.type:
-		TYPE_BOOL:
-			property_field = FIELD_BOOL.instantiate()
-		TYPE_INT:
-			# TODO: Could do custom layer fields: PROPERTY_HINT_LAYERS_2D_RENDER
-			if property.hint == PROPERTY_HINT_ENUM:
-				property_field = FIELD_ENUM.instantiate()
-			else:
-				property_field = FIELD_INT.instantiate()
-		TYPE_FLOAT:
-			property_field = FIELD_FLOAT.instantiate()
-		TYPE_STRING, TYPE_STRING_NAME:
-			if property.hint == PROPERTY_HINT_ENUM:
-				property_field = FIELD_ENUM.instantiate()
-			elif property.hint == PROPERTY_HINT_MULTILINE_TEXT:
-				property_field = FIELD_MULTILINE_TEXT.instantiate()
-			else:
-				property_field = FIELD_STRING.instantiate()
-		TYPE_COLOR:
-			property_field = FIELD_COLOR.instantiate()
-		TYPE_VECTOR2, TYPE_VECTOR2I:
-			property_field = FIELD_VECTOR_2.instantiate()
-		TYPE_VECTOR3, TYPE_VECTOR3I:
-			property_field = FIELD_VECTOR_3.instantiate()
-		#TYPE_ARRAY:
-			#property_field = FIELD_ARRAY.instantiate()
-		#TYPE_OBJECT:
-			#property_field = FIELD_OBJECT.instantiate()
-		_:
-			print("Non-handled type: ", property.type)
-
-	return property_field
 
 ## Set the value of the property via the event_manager. An optional suffix can be given to the property name.
 func _on_property_field_property_changed(property: StringName, value: Variant, record_undo: bool) -> void:
@@ -218,6 +151,39 @@ func _on_property_field_property_changed(property: StringName, value: Variant, r
 			value
 		)
 
-# Might be worth considering to copy this function.
-#static func instantiate_property_editor(object: Object, type: Variant.Type, path: String, hint: PropertyHint, hint_text: String, usage: int) -> PropertyBase:
-#	pass
+## Creates a property editor that can be used to edit the specified property of an object.
+static func instantiate_property_editor(object: Object, type: Variant.Type, path: String, hint: PropertyHint, hint_text: String, usage: int) -> PropertyBase:
+	var field_scene: PackedScene
+
+	match [type, hint]:
+		[_, PROPERTY_HINT_ENUM]: field_scene = FIELD_ENUM
+		[_, PROPERTY_HINT_MULTILINE_TEXT]: field_scene = FIELD_MULTILINE_TEXT
+		#[_, PROPERTY_HINT_LAYERS_2D_RENDER]: TODO: Layer flag editor.
+		[TYPE_BOOL, _]: field_scene = FIELD_BOOL
+		[TYPE_INT, _]: field_scene = FIELD_INT
+		[TYPE_FLOAT, _]: field_scene = FIELD_FLOAT
+		[TYPE_STRING, _], [TYPE_STRING_NAME, _]: field_scene = FIELD_STRING
+		[TYPE_COLOR, _]: field_scene = FIELD_COLOR
+		[TYPE_VECTOR2, _], [TYPE_VECTOR2I, _]: field_scene = FIELD_VECTOR_2
+		[TYPE_VECTOR3, _], [TYPE_VECTOR3I, _]: field_scene = FIELD_VECTOR_3
+		#[TYPE_ARRAY, _]: field_scene = FIELD_ARRAY # TODO: Array editor.
+		#[TYPE_OBJECT, _]: field_scene = FIELD_OBJECT # TODO: Object editor.
+		[_, _]: print("Non handled property type/hint:\n\t%s/%s" % [type, hint])
+
+	if not field_scene: return null
+	var property_field: PropertyBase = field_scene.instantiate()
+
+	property_field.set_object_and_property_data(object, path, hint, hint_text)
+
+	if usage & PROPERTY_USAGE_CHECKED:
+		property_field.checkable = true
+		#property_field.checked = true
+	elif usage & PROPERTY_USAGE_CHECKABLE:
+		property_field.checkable = true
+
+	property_field.label = path.capitalize()
+	if object is Skeleton3D: # Singled out for autocomplete recognition.
+		if path.contains("bones/"):
+			property_field.label = "Bone: " + object.get_bone_name( int(path.split("/")[1]) ) + " " + path.split("/")[-1]
+
+	return property_field

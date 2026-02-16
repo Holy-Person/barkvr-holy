@@ -16,15 +16,14 @@ func _setup() -> void:
 	line_edit.editing_toggled.connect(_on_line_edit_editing_toggled)
 	line_edit.text_submitted.connect(_on_line_edit_text_submitted)
 
-func _on_data_set(property: Dictionary) -> void:
 	# Set placeholder text if one is defined.
-	if property.hint == PROPERTY_HINT_PLACEHOLDER_TEXT:
-		line_edit.placeholder_text = property.hint_string
+	if hint == PROPERTY_HINT_PLACEHOLDER_TEXT:
+		line_edit.placeholder_text = hint_text
 
 
 
 func _update_visual() -> void:
-	line_edit.set_text(target.get(property_name))
+	line_edit.set_text(target.get(property))
 
 
 

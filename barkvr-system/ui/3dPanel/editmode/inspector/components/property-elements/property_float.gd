@@ -21,7 +21,7 @@ func _setup() -> void:
 
 func _update_visual() -> void:
 	# Value is rounded for readability.
-	line_edit.text = str( snapped(target[property_name], 0.0001) )
+	line_edit.text = str( snapped(target[property], 0.0001) )
 
 
 

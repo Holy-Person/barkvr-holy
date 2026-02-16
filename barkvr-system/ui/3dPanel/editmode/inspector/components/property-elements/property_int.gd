@@ -16,15 +16,14 @@ func _setup() -> void:
 	spin_box.get_line_edit().text_submitted.connect(_on_spin_box_text_submitted)
 
 	# Prevent null revert values.
-	if property_revert_value == null:
-		property_revert_value = 0
+	if revert_value == null: revert_value = 0
 
 func _update_visual() -> void:
 	# Do not set SpinBox value to null.
-	if checkable and target.get(property_name) == null:
-		spin_box.set_value_no_signal(property_revert_value)
+	if checkable and target.get(property) == null:
+		spin_box.set_value_no_signal(revert_value)
 		return
-	spin_box.set_value_no_signal(target.get(property_name))
+	spin_box.set_value_no_signal(target.get(property))
 
 
 

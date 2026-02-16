@@ -16,15 +16,14 @@ extends PropertyBase
 func _setup() -> void:
 	check_box.toggled.connect(_on_check_box_toggled)
 
-func _on_data_set(_property: Dictionary) -> void:
 	# Unsure as to why this is here, carried over from Zodie's old version.
-	if property_name.contains("/"):
+	if property.contains("/"):
 		queue_free()
 		return
-	check_box.set_pressed_no_signal(target.get(property_name))
+	check_box.set_pressed_no_signal(target.get(property))
 
 func _update_visual() -> void:
-	check_box.set_pressed_no_signal(target.get(property_name))
+	check_box.set_pressed_no_signal(target.get(property))
 
 
 

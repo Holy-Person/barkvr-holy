@@ -14,12 +14,17 @@ extends PropertyBase
 ## Expression used for executing mathematical expressions.
 var expression = Expression.new()
 
+## Used to decide how to display the value.
+var is_vector_int: bool = false
+
 
 
 func _setup() -> void:
 	for axis: String in line_edit_list:
 		line_edit_list[axis].text_changed.connect(_on_line_edit_text_changed.bind(axis))
 		line_edit_list[axis].editing_toggled.connect(_on_line_edit_editing_toggled.bind(axis))
+
+	is_vector_int = typeof(target[property][0]) == TYPE_INT
 
 # TODO: Finish linkable ratio stuff.
 # For some reason this just exists for things that don't have it in the EditorInspector.
@@ -35,10 +40,10 @@ func _update_visual() -> void:
 ## Dynamically sets the string of a LineEdit to show int or float values.
 ## Float values are rounded for readability.
 func set_axis_text(axis: String) -> void:
-	if typeof(target[property_name][axis]) == TYPE_INT: # Direct.
-		line_edit_list[axis].text = str( target[property_name][axis] )
+	if is_vector_int: # Direct.
+		line_edit_list[axis].text = str( target[property][axis] )
 	else: # Dynamic rounding.
-		line_edit_list[axis].text = str( snapped(target[property_name][axis], 0.0001) )
+		line_edit_list[axis].text = str( snapped(target[property][axis], 0.0001) )
 
 
 

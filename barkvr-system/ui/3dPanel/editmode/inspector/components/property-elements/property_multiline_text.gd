@@ -18,7 +18,7 @@ func _setup() -> void:
 
 
 func _update_visual() -> void:
-	text_edit.set_text(target.get(property_name))
+	text_edit.set_text(target.get(property))
 
 
 

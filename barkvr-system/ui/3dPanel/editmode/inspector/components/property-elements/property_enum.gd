@@ -18,21 +18,18 @@ var is_string_enum: bool = false
 func _setup() -> void:
 	option_button.item_selected.connect(_on_option_button_item_selected)
 
-func _on_data_set(property: Dictionary) -> void:
-	# Get the hint string as String, see PropertyHint in @GlobalScope.
-	var hint_string: String = property.hint_string
-	# Discard if no hint string is provided.
-	if hint_string.is_empty(): queue_free()
+	# Discard if no hint text is provided.
+	if hint_text.is_empty(): queue_free()
 
-	is_string_enum = property.type != TYPE_INT
+	is_string_enum = typeof(target.get(property)) != TYPE_INT
 
 	# Leftover from previous version, unsure on function.
 	if is_string_enum: option_button.add_item("None")
 
 	# Add each option from hint_string.
-	for option: String in hint_string.split(","):
+	for option: String in hint_text.split(","):
 		if option.contains(":"):
-			# IDs can be directly specified as such "option:integer"
+			# IDs can be directly specified as such: "option:integer"
 			var split_option: PackedStringArray = option.split(":")
 			option_button.add_item(split_option[0], split_option[1].to_int())
 		else:
@@ -40,9 +37,9 @@ func _on_data_set(property: Dictionary) -> void:
 
 func _update_visual() -> void:
 	if is_string_enum:
-		option_button.selected = get_item_index_from_text(target.get(property_name))
+		option_button.selected = get_item_index_from_text(target.get(property))
 	else:
-		option_button.selected = target.get(property_name)
+		option_button.selected = target.get(property)
 
 
 
