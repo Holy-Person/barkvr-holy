@@ -1,8 +1,280 @@
 [gd_scene format=3 uid="uid://1ynmsuc1l8yy"]
 
 [ext_resource type="PackedScene" uid="uid://st0g73ctru0x" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_base.tscn" id="1_grmgw"]
+[ext_resource type="Script" uid="uid://be65uhvhdedd5" path="res://barkvr-system/ui/3dPanel/editmode/inspector/components/property-elements/property_color.gd" id="2_7afmp"]
 
-[node name="PropertyColor" unique_id=362108127 instance=ExtResource("1_grmgw")]
+[node name="PropertyColor" unique_id=362108127 node_paths=PackedStringArray("line_edit_list") instance=ExtResource("1_grmgw")]
+script = ExtResource("2_7afmp")
+line_edit_list = {
+"hex": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/HEX/PropertySpinSlider/HBoxContainer/LineEdit"),
+"hsva:a": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider4/HBoxContainer/LineEdit"),
+"hsva:h": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider/HBoxContainer/LineEdit"),
+"hsva:s": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider2/HBoxContainer/LineEdit"),
+"hsva:v": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider3/HBoxContainer/LineEdit"),
+"rgba:a": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider4/HBoxContainer/LineEdit"),
+"rgba:b": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider3/HBoxContainer/LineEdit"),
+"rgba:g": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider2/HBoxContainer/LineEdit"),
+"rgba:r": NodePath("VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider/HBoxContainer/LineEdit")
+}
 
-[node name="ColorPickerButton" type="ColorPickerButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=1989280659]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal" parent_id_path=PackedInt32Array(137273017) index="0" unique_id=1462532653]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer" index="0" unique_id=160823710]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer/MarginContainer" index="0" unique_id=1639575452]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/TopBar/BoxContainer/EditingFieldHorizontal/HBoxContainer" index="1" unique_id=1553258334]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+selected = 0
+item_count = 3
+popup/item_0/text = "RGBA"
+popup/item_0/id = 0
+popup/item_1/text = "HSVA"
+popup/item_1/id = 1
+popup/item_2/text = "HEX"
+popup/item_2/id = 2
+
+[node name="EditingFieldVertical" parent="VBoxContainer" parent_id_path=PackedInt32Array(2119337536) index="1" unique_id=1035210610]
+visible = true
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/EditingFieldVertical" index="0" unique_id=924004916]
+unique_name_in_owner = true
+layout_mode = 2
+theme_type_variation = &"TabContainerFlat"
+current_tab = 0
+tabs_visible = false
+
+[node name="RGBA" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer" index="1" unique_id=1389790270]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA" index="0" unique_id=2097669459]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider" index="0" unique_id=1028598014]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider/HBoxContainer" index="0" unique_id=1675639885]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider/HBoxContainer/PanelContainer" index="0" unique_id=1655753082]
+self_modulate = Color(0.8821333, 0.3741794, 0.38193867, 1)
+layout_mode = 2
+text = "r"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider/HBoxContainer" index="1" unique_id=1143465981]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider2" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA" index="1" unique_id=571952438]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider2" index="0" unique_id=563375691]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider2/HBoxContainer" index="0" unique_id=579910934]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0" unique_id=1175595396]
+self_modulate = Color(0.3647059, 0.6392157, 0.34117648, 1)
+layout_mode = 2
+text = "g"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider2/HBoxContainer" index="1" unique_id=368186662]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider3" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA" index="2" unique_id=1688103740]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider3" index="0" unique_id=1730484462]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider3/HBoxContainer" index="0" unique_id=335510836]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider3/HBoxContainer/PanelContainer" index="0" unique_id=1122009384]
+self_modulate = Color(0.3647059, 0.4117647, 0.72156864, 1)
+layout_mode = 2
+text = "b"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider3/HBoxContainer" index="1" unique_id=1365928868]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider4" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA" index="3" unique_id=347705442]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider4" index="0" unique_id=1410508798]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider4/HBoxContainer" index="0" unique_id=2035001469]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider4/HBoxContainer/PanelContainer" index="0" unique_id=592443981]
+self_modulate = Color(0.9166399, 0.91663986, 0.9166398, 1)
+layout_mode = 2
+text = "a"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/RGBA/PropertySpinSlider4/HBoxContainer" index="1" unique_id=977484738]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSVA" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer" index="2" unique_id=1034233359]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA" index="0" unique_id=1579517259]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider" index="0" unique_id=1193237280]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider/HBoxContainer" index="0" unique_id=654306241]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider/HBoxContainer/PanelContainer" index="0" unique_id=406486952]
+self_modulate = Color(0.91764706, 0.91764706, 0.91764706, 1)
+layout_mode = 2
+text = "h"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider/HBoxContainer" index="1" unique_id=1232223299]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider2" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA" index="1" unique_id=1641688488]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider2" index="0" unique_id=385063739]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider2/HBoxContainer" index="0" unique_id=430470053]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider2/HBoxContainer/PanelContainer" index="0" unique_id=474946825]
+self_modulate = Color(0.91764706, 0.91764706, 0.91764706, 1)
+layout_mode = 2
+text = "s"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider2/HBoxContainer" index="1" unique_id=1102212101]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider3" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA" index="2" unique_id=1296933919]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider3" index="0" unique_id=1550494757]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider3/HBoxContainer" index="0" unique_id=1053433824]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider3/HBoxContainer/PanelContainer" index="0" unique_id=1933640196]
+modulate = Color(0.91764706, 0.91764706, 0.91764706, 1)
+layout_mode = 2
+text = "v"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider3/HBoxContainer" index="1" unique_id=1275566284]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PropertySpinSlider4" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA" index="3" unique_id=561249298]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider4" index="0" unique_id=1359984395]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider4/HBoxContainer" index="0" unique_id=896773748]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider4/HBoxContainer/PanelContainer" index="0" unique_id=1821570543]
+self_modulate = Color(0.9166399, 0.91663986, 0.9166398, 1)
+layout_mode = 2
+text = "a"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/HSVA/PropertySpinSlider4/HBoxContainer" index="1" unique_id=1450193530]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HEX" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer" index="3" unique_id=432347242]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="PropertySpinSlider" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HEX" index="0" unique_id=1527477894]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_type_variation = &"PanelContainerFlat"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HEX/PropertySpinSlider" index="0" unique_id=1845715369]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/EditingFieldVertical/TabContainer/HEX/PropertySpinSlider/HBoxContainer" index="0" unique_id=1034668100]
+layout_mode = 2
+theme_type_variation = &"PropertySpinSliderAxis"
+
+[node name="Label" type="Label" parent="VBoxContainer/EditingFieldVertical/TabContainer/HEX/PropertySpinSlider/HBoxContainer/PanelContainer" index="0" unique_id=856042398]
+self_modulate = Color(0.91764706, 0.91764706, 0.91764706, 1)
+layout_mode = 2
+text = "hex"
+horizontal_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/EditingFieldVertical/TabContainer/HEX/PropertySpinSlider/HBoxContainer" index="1" unique_id=1552334964]
+layout_mode = 2
+size_flags_horizontal = 3
+max_length = 9

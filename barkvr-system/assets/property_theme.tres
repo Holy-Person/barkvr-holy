@@ -258,6 +258,8 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 anti_aliasing = false
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ext0n"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rm0pw"]
 content_margin_left = 4.0
 content_margin_top = 4.0
@@ -382,6 +384,8 @@ PropertyListScroll/base_type = &"ScrollContainer"
 PropertyListScroll/styles/panel = SubResource("StyleBoxFlat_qvx73")
 PropertySpinSliderAxis/base_type = &"PanelContainer"
 PropertySpinSliderAxis/styles/panel = SubResource("StyleBoxFlat_bpoyx")
+TabContainerFlat/base_type = &"TabContainer"
+TabContainerFlat/styles/panel = SubResource("StyleBoxEmpty_ext0n")
 TextEdit/colors/selection_color = Color(0.20392157, 0.31764707, 0.46666667, 1)
 TextEdit/styles/focus = SubResource("StyleBoxFlat_rm0pw")
 TextEdit/styles/normal = SubResource("StyleBoxFlat_je2hc")
